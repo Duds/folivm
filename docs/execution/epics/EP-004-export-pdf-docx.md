@@ -1,7 +1,7 @@
 ---
 title: EP-004 — Export to PDF and DOCX
-project: DocForge
-status: draft
+project: Folivm
+status: done
 version: 0.1
 created: 2026-02-20
 depends_on:
@@ -39,10 +39,10 @@ The author exports the current document to PDF and DOCX with one click. Output i
 
 | ID | Title | Status |
 |----|-------|--------|
-| US-030 | As an author, I want to export the current document to PDF so that I can deliver it to my client | Not started |
-| US-031 | As an author, I want to export the current document to DOCX so that I can deliver it in Word format | Not started |
-| US-032 | As an author, I want to specify a reference DOCX template so that DOCX export matches my branding | Not started |
-| US-033 | As an author, I want to choose the export path (default deliverables/) so that I control where files go | Not started |
+| [US-030](../stories/US-030-export-pdf.md) | As an author, I want to export the current document to PDF so that I can deliver it to my client | Done |
+| [US-031](../stories/US-031-export-docx.md) | As an author, I want to export the current document to DOCX so that I can deliver it in Word format | Done |
+| [US-032](../stories/US-032-reference-docx-template.md) | As an author, I want to specify a reference DOCX template so that DOCX export matches my branding | Done |
+| [US-033](../stories/US-033-choose-export-path.md) | As an author, I want to choose the export path (default deliverables/) so that I control where files go | Not started |
 
 ## Related
 

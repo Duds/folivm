@@ -1,0 +1,140 @@
+/* Folivm default print stylesheet - element-based styling per PRD */
+
+@page {
+  margin: 2.5cm;
+}
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12pt;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+
+h1 {
+  font-size: 18pt;
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  page-break-after: avoid;
+}
+
+h2 {
+  font-size: 14pt;
+  font-weight: bold;
+  margin-top: 1.25em;
+  margin-bottom: 0.4em;
+  page-break-after: avoid;
+}
+
+h3, h4 {
+  font-size: 12pt;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0.5em 0;
+}
+
+ul, ol {
+  margin: 0.5em 0;
+  padding-left: 2em;
+}
+
+li {
+  margin: 0.25em 0;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  width: 100%;
+  page-break-inside: avoid;
+}
+
+th, td {
+  border: 1px solid #333;
+  padding: 0.4em 0.6em;
+  text-align: left;
+}
+
+th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+blockquote {
+  margin: 1em 1.5em;
+  padding-left: 1em;
+  border-left: 3px solid #999;
+  color: #555;
+}
+
+pre, code {
+  font-family: "Consolas", "Monaco", monospace;
+  font-size: 0.9em;
+}
+
+pre {
+  background: #f5f5f5;
+  padding: 1em;
+  overflow-x: auto;
+  page-break-inside: avoid;
+}
+
+/* Semantic blocks (Pandoc fenced divs) */
+.callout {
+  margin: 1em 0;
+  padding: 1em;
+  border-left: 4px solid #1a73e8;
+  background: #e8f0fe;
+  page-break-inside: avoid;
+}
+
+.executive-summary {
+  margin: 1em 0;
+  padding: 1em;
+  background: #f9f9f9;
+  font-style: italic;
+  page-break-inside: avoid;
+}
+
+/* Multi-level heading numbering via CSS counters */
+body {
+  counter-reset: h1;
+}
+
+h1 {
+  counter-reset: h2;
+  counter-increment: h1;
+}
+
+h1::before {
+  content: counter(h1) ". ";
+}
+
+h2 {
+  counter-reset: h3;
+  counter-increment: h2;
+}
+
+h2::before {
+  content: counter(h1) "." counter(h2) " ";
+}
+
+h3 {
+  counter-increment: h3;
+}
+
+h3::before {
+  content: counter(h1) "." counter(h2) "." counter(h3) " ";
+}
+
+/* Pandoc inline footnotes — rendered as superscript markers */
+sup.footnote-inline {
+  font-size: 0.75em;
+  vertical-align: super;
+}

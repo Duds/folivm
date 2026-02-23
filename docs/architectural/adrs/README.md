@@ -1,6 +1,6 @@
 ---
 title: ADR Log
-project: DocForge
+project: Folivm
 status: draft
 version: 0.1
 created: 2026-02-19
@@ -11,7 +11,7 @@ depends_on:
 
 # Architecture Decision Record (ADR) Log
 
-This directory contains Architecture Decision Records for DocForge. ADRs capture material architectural and technology decisions with context, rationale, and consequences. Use the template for new ADRs and add entries to this log.
+This directory contains Architecture Decision Records for Folivm. ADRs capture material architectural and technology decisions with context, rationale, and consequences. Use the template for new ADRs and add entries to this log.
 
 ## How to add an ADR
 

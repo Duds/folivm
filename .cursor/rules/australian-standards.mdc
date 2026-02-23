@@ -58,7 +58,7 @@ Always use Australian date format:
   - 31-12-2023 (31st December 2023)
 - **Written format**: 15 January 2024 (day month year, no ordinal suffixes in formal writing)
 
-**Never** use US format (MM/DD/YYYY) in prose. **Exception:** Use ISO format (YYYY-MM-DD) for frontmatter fields (`created`, `updated`), RAIDD/ADR date columns, and any machine-readable or sortable dates — this is required for consistency across the DocForge docs.
+**Never** use US format (MM/DD/YYYY) in prose. **Exception:** Use ISO format (YYYY-MM-DD) for frontmatter fields (`created`, `updated`), RAIDD/ADR date columns, and any machine-readable or sortable dates — this is required for consistency across the Folivm docs.
 
 ## Time
 

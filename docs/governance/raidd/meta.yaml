@@ -1,16 +1,17 @@
 # RAIDD log metadata. Source of truth for rendered docs/governance/raid.md.
 # Schema: project, title, status, version, created, updated, depends_on,
 # review_schedule, changelog (list of { date, change, changed_by }), nav_previous, nav_next.
-project: DocForge
+project: Folivm
 title: RAIDD Log
 status: draft
 version: "0.2"
 created: "2026-02-19"
-updated: "2026-02-20"
+updated: "2026-02-23"
 depends_on:
   - docs/strategic/solution-concept.md
   - docs/conceptual/conops.md
   - docs/conceptual/prd-lean.md
+  - docs/execution/ui-scaffold-prompt.md
   - NOTES.md
 
 review_schedule:
@@ -21,6 +22,9 @@ review_schedule:
 
 # Changelog entries: newest first. Append new rows when updating RAIDD.
 changelog:
+  - date: "2026-02-23"
+    change: "Added DEC-019 (Figma-first design token system for application chrome); ui-scaffold-prompt to depends_on"
+    changed_by: EP-008
   - date: "2026-02-20"
     change: "Concept refactor: DEC-009 (Pandoc format), DEC-010 (Phase 0 local-first), DEC-011 (TipTap/Electron/Tauri); R-007, R-008; R-003/R-005 phase applicability"
     changed_by: REFACTOR-PLAN

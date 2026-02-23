@@ -59,33 +59,109 @@ decisions:
     status: Accepted
   - id: DEC-008
     decision: "DOCX Track Changes markup generated on export for reviewer compatibility only"
-    rationale: "Interoperability with Word-based reviewers; not used inside DocForge"
+    rationale: "Interoperability with Word-based reviewers; not used inside Folivm"
     alternatives_considered: "No Track Changes; full internal Track Changes"
     impact: "Medium — export and collaboration"
     decision_maker: "ConOps / PRD"
     date_made: "2026-02-19"
     status: Accepted
   - id: DEC-009
+    decision: "Product name is Vellum; format name is RichMark"
+    rationale: "Vellum signals craft and quality for the product surface; RichMark (Rich + Markdown) signals the format's lineage. Two names served two audiences. Superseded by DEC-020."
+    alternatives_considered: "Single name for both; Fount (too abstract); Prism (likely conflicted)"
+    impact: "High — all project documentation, branding, and naming"
+    decision_maker: "Brand session 2026-02-22"
+    date_made: "2026-02-22"
+    status: Superseded
+    superseded_by: DEC-020
+  - id: DEC-020
+    decision: "Single brand Folivm for company, product, and format"
+    rationale: "Brand clarity requires one name across company, product, and document format. RichMark and Vellum are not clear for brand purposes."
+    alternatives_considered: "Dual naming (DEC-009)"
+    impact: "High — all project documentation, branding, and naming"
+    decision_maker: "Brand review 2026-02-23"
+    date_made: "2026-02-23"
+    status: Accepted
+  - id: DEC-010
+    decision: "Folivm is a suite with one medium (Folivm) and three rendering modes: document, deck, sheet"
+    rationale: "A consultant's deliverable package shares one source of truth. The single-source problem (same content in Word, PowerPoint, Excel, manually kept in sync) is the core problem. One medium with mode switching eliminates it. Three separate products would reproduce the same problem at the tool level."
+    alternatives_considered: "Three separate tools; document editor only with export; Jupyter-style notebook only"
+    impact: "High — product scope, roadmap sequencing, architecture"
+    decision_maker: "Brand and architecture session 2026-02-22"
+    date_made: "2026-02-22"
+    status: Accepted
+  - id: DEC-011
+    decision: "Mode introduction is phased: document (Phase 0), deck (Phase 1), sheet (Phase 2)"
+    rationale: "Export fidelity decreases across modes (DOCX high, PPTX medium, XLSX low). Sequencing by fidelity means each mode is validated before the next harder one is introduced. Sheet mode requires the most novel work (formula language, execution model, XLSX translation); deferring it allows real usage to inform the design."
+    alternatives_considered: "Build all three modes simultaneously; sheet before deck"
+    impact: "High — roadmap and backlog"
+    decision_maker: "Architecture session 2026-02-22"
+    date_made: "2026-02-22"
+    status: Accepted
+  - id: DEC-012
+    decision: "XLSX export is a compatibility artefact with known fidelity limitations; CSV export is first-class"
+    rationale: "Excel's formula engine and Folivm's formula layer have different execution models and formula languages. Perfect translation is not achievable. CSV export loses no information from data cells and is a clean, reliable path for data pipeline consumers. Do not design XLSX export until sheet mode is validated."
+    alternatives_considered: "Full-fidelity XLSX as a product requirement; no XLSX export"
+    impact: "Medium — Phase 2 scope and client expectations"
+    decision_maker: "Architecture session 2026-02-22"
+    date_made: "2026-02-22"
+    status: Accepted
+  - id: DEC-013
+    decision: "The product surface (Folivm GUI) must feel as familiar as Word to non-technical clients; the format (Folivm) is invisible to them"
+    rationale: "The primary Phase 0 user (technical consultant) is the translator between ASCII-native authoring and Office-native distribution. Clients receive DOCX/PDF/PPTX; they never see Folivm. For Phase 1+ when clients may use the editor directly, the surface must be familiar enough that they don't need to learn a new paradigm. Familiarity is the adoption mechanism."
+    alternatives_considered: "Surface the format to all users; require clients to learn Folivm"
+    impact: "High — UX philosophy and Phase 1+ design"
+    decision_maker: "Brand session 2026-02-22"
+    date_made: "2026-02-22"
+    status: Accepted
+  - id: DEC-014
     decision: "Backing format is Pandoc Markdown; not custom DOM"
-    rationale: "Pandoc already supports fenced divs, YAML frontmatter, footnotes, citations, cross-refs. No format invention required. Supersedes implied custom YAML/JSON in original solution concept"
+    rationale: "Pandoc already supports fenced divs, YAML frontmatter, footnotes, citations, cross-refs. No format invention required. Supersedes implied custom YAML/JSON in original solution concept."
     alternatives_considered: "Custom document object model; Quarto format"
     impact: "High — storage and export architecture"
     decision_maker: "REFACTOR-PLAN / concept evolution"
     date_made: "2026-02-20"
     status: Accepted
-  - id: DEC-010
+  - id: DEC-015
     decision: "Phase 0 is local-first personal tool; server-hosted is Phase 1+"
-    rationale: "Phase 0 primary user is the author; solve own problem first. Local-first aligns with personal tool scope. Server-hosted required for collaboration, clause library, DMS; deferred to Phase 1+"
+    rationale: "Phase 0 primary user is the author; solve own problem first. Local-first aligns with personal tool scope. Server-hosted required for collaboration, clause library, DMS; deferred to Phase 1+."
     alternatives_considered: "Server-hosted from Phase 0"
     impact: "High — deployment and Phase 0 scope"
     decision_maker: "REFACTOR-PLAN / concept evolution"
     date_made: "2026-02-20"
     status: Accepted
-  - id: DEC-011
+  - id: DEC-016
     decision: "Phase 0 GUI base is TipTap/ProseMirror wrapped in Electron or Tauri"
-    rationale: "ProseMirror is Pandoc-compatible; TipTap provides extension ecosystem. Electron/Tauri for desktop deployment. ADR required to choose Electron vs Tauri"
+    rationale: "ProseMirror is Pandoc-compatible; TipTap provides extension ecosystem. Electron/Tauri for desktop deployment. ADR required to choose Electron vs Tauri."
     alternatives_considered: "Web-only; Slate; Lexical"
     impact: "High — GUI and desktop stack"
     decision_maker: "REFACTOR-PLAN / concept evolution"
     date_made: "2026-02-20"
     status: "Proposed — ADR pending"
+  - id: DEC-017
+    decision: "Monetisation model is three-tier: (1) Folivm core tool — one-time purchase, local-first, no account required; (2) Folivm AI — optional subscription, managed LLM proxy service; (3) Folivm Sync — optional subscription, thin cloud sync"
+    rationale: "Unbundling separates three distinct concerns that most SaaS tools conflate into a single subscription. The core tool ownership commitment (local-first, files are yours, no subscription required to access your own work) is central to positioning in a market with growing enshittification fatigue. Folivm AI solves the BYOK friction problem for non-technical users without making AI a mandatory subscription. Folivm Sync serves multi-device convenience without requiring a full cloud platform. Each tier has honest recurring justification: core tool is a one-time product; AI proxy has real ongoing infrastructure costs; Sync has real ongoing storage costs. Precedents: Obsidian (local + optional Sync/Publish), iA Writer (one-time purchase), Overcast (one-time + optional server-side features)."
+    alternatives_considered: "Full SaaS subscription (reintroduces enshittification risk, undermines local-first positioning); perpetual licence only, no managed AI (BYOK friction blocks non-technical users); open-source core with SaaS services (stronger commitment covenant but revenue model less clear at Phase 0 scale)"
+    impact: "High — product positioning, infrastructure requirements, pricing, go-to-market, long-term trust"
+    decision_maker: "Commercial model session 2026-02-22"
+    date_made: "2026-02-22"
+    status: Accepted
+    note: "Commitment covenant required: core tool features are never gated behind Tier 2 or Tier 3 subscriptions. This must be public and stated in licence terms, not just intended internally. BYOK escape hatch must remain available for government and enterprise users."
+  - id: DEC-018
+    decision: "Pandoc is not forked. Folivm uses a pre-processing pipeline to resolve extended cell types before invoking Pandoc for export. Folivm's semantic layer lives in Folivm's own codebase."
+    rationale: "Forking Pandoc would require owning a Haskell codebase, permanently diverging from upstream, and merging every future Pandoc release. Pandoc's value to Folivm is its export writers (DOCX, PDF, PPTX) — that value is preserved whether you fork or use a pipeline. The extended cell types (data, formula, visual, frame) are execution and rendering problems, not parsing problems; Pandoc's architecture is not designed for them. A pre-processing pipeline resolves cell types in Folivm's own codebase (TypeScript/Rust) before Pandoc is invoked, producing standard Pandoc Markdown that Pandoc converts without needing to know about Folivm extensions. Lua filters handle any remaining export-time transformation. This keeps Pandoc as a freely updatable dependency and makes Folivm's semantics testable independently."
+    alternatives_considered: "Fork Pandoc and add DataCell/FormulaCell/VisualCell/FrameCell as first-class AST nodes (rejected: Haskell burden, upstream divergence, fights Pandoc's fundamental design); Lua filters only without pre-processor (insufficient for formula evaluation and visual cell rendering); Replace Pandoc with custom export writers (rejected: abandons 20 years of writer quality)"
+    impact: "High — export pipeline architecture, Folivm format specification, testability"
+    decision_maker: "Architecture session 2026-02-22"
+    date_made: "2026-02-22"
+    status: Accepted
+    note: "Djot (designed by Pandoc's author John MacFarlane) is worth monitoring as a potential future prose substrate — cleaner extension model, designed for programmatic use. Too immature and LLM-unfamiliar for current use but worth revisiting if Folivm's Pandoc Markdown substrate proves limiting."
+  - id: DEC-019
+    decision: "Application chrome uses Figma-first design token system (primitives → semantic aliases → component tokens); document-level brand manifest (EP-201) is separate"
+    rationale: "Figma mapping (primitives, styles, variables, component variants) aligns design and code; token chain enables mode switching (Focus, Client Brand A) without component CSS changes. Application chrome tokens are distinct from document-level brand variables (Phase 2)."
+    alternatives_considered: "Ad-hoc component styling; Tailwind colour/spacing classes throughout; single shared token layer"
+    impact: "Medium — interface implementation, design handoff, Phase 2 brand manifest alignment"
+    decision_maker: "UI scaffold prompt 2026-02-23"
+    date_made: "2026-02-23"
+    status: Accepted
+    note: "Specification: docs/execution/ui-scaffold-prompt.md (EP-008)"

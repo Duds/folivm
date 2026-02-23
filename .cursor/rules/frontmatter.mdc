@@ -1,17 +1,17 @@
 ---
-description: Frontmatter standards for DocForge markdown documents
+description: Frontmatter standards for Folivm markdown documents
 alwaysApply: false
 ---
 # Frontmatter Standards
 
-DocForge project documents use a consistent YAML frontmatter format. This aligns with the docforge-drafter skill and the artefact hierarchy.
+Folivm project documents use a consistent YAML frontmatter format. This aligns with the Folivm-drafter skill and the artefact hierarchy.
 
 ## Required Fields
 
 All project documents in `docs/` must include:
 
 - **title**: Document title (required)
-- **project**: `DocForge`
+- **project**: `Folivm`
 - **status**: One of `stub`, `draft`, `approved`, or `template` (for templates only)
 - **version**: Semantic version (e.g. `0.1`)
 - **created**: Creation date in **YYYY-MM-DD** (ISO format for machine readability)
@@ -27,7 +27,7 @@ All project documents in `docs/` must include:
 ```yaml
 ---
 title: [Document Title]
-project: DocForge
+project: Folivm
 status: draft
 version: 0.1
 created: YYYY-MM-DD

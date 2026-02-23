@@ -1,2 +1,2 @@
-# DocForge docs/RAIDD generator. Install: pip install -r scripts/requirements.txt
+# Folivm docs/RAIDD generator. Install: pip install -r scripts/requirements.txt
 PyYAML>=6.0

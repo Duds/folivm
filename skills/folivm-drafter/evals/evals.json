@@ -2,7 +2,7 @@
   {
     "id": "eval-01",
     "description": "Draft the ConOps from the solution-concept upstream",
-    "prompt": "Use the docforge-drafter skill. I want to draft the ConOps document. The file is at docs/conceptual/conops.md.",
+    "prompt": "Use the Folivm-drafter skill. I want to draft the ConOps document. The file is at docs/conceptual/conops.md.",
     "expectations": [
       "Reads NOTES.md before drafting",
       "Reads solution-concept.md as upstream dependency",
@@ -18,7 +18,7 @@
   {
     "id": "eval-02",
     "description": "Draft an ADR for the GUI framework decision",
-    "prompt": "Use the docforge-drafter skill. I want to draft an ADR for the GUI framework decision (Electron vs local-first web app). Create it as docs/architectural/adrs/ADR-0001-gui-framework.md.",
+    "prompt": "Use the Folivm-drafter skill. I want to draft an ADR for the GUI framework decision (Electron vs local-first web app). Create it as docs/architectural/adrs/ADR-0001-gui-framework.md.",
     "expectations": [
       "Reads NOTES.md before drafting",
       "Reads principles.md as upstream dependency",
@@ -33,7 +33,7 @@
   {
     "id": "eval-03",
     "description": "Draft the Options Analysis",
-    "prompt": "Use the docforge-drafter skill. I want to draft the options-analysis document. The file is at docs/strategic/options-analysis.md.",
+    "prompt": "Use the Folivm-drafter skill. I want to draft the options-analysis document. The file is at docs/strategic/options-analysis.md.",
     "expectations": [
       "Reads NOTES.md before drafting",
       "Reads both problem-statement.md and solution-concept.md",

@@ -1,6 +1,6 @@
 ---
 title: US-002 — Add headings, lists, and tables
-project: DocForge
+project: Folivm
 status: draft
 version: 0.1
 created: 2026-02-20

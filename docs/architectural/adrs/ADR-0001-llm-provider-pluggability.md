@@ -1,6 +1,6 @@
 ---
 title: ADR-0001 — LLM Provider Pluggability and Data Sovereignty
-project: DocForge
+project: Folivm
 status: proposed
 version: 0.1
 created: 2026-02-20
@@ -18,7 +18,7 @@ Proposed
 
 ## Context
 
-When document content is sent to an LLM API for generation or analysis, it leaves the platform. For Australian government users, agency policy may prohibit sending content to overseas API endpoints. DocForge's target market (professional services firms, government agencies) requires data sovereignty options.
+When document content is sent to an LLM API for generation or analysis, it leaves the platform. For Australian government users, agency policy may prohibit sending content to overseas API endpoints. Folivm's target market (professional services firms, government agencies) requires data sovereignty options.
 
 The solution concept and HLA specify direct API calls for Phase 0 LLM assistance. A decision is needed on:
 1. Whether the LLM integration is provider-agnostic (pluggable) or tied to a single API

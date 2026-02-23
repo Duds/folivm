@@ -1,16 +1,16 @@
 ---
-title: US-050 — Launch DocForge as desktop app
-project: DocForge
+title: US-050 — Launch Folivm as desktop app
+project: Folivm
 status: draft
 version: 0.1
 created: 2026-02-20
 epic: EP-006
 ---
 
-# US-050 — Launch DocForge as desktop app
+# US-050 — Launch Folivm as desktop app
 
 **As an** author,  
-**I want to** launch DocForge as a desktop app  
+**I want to** launch Folivm as a desktop app  
 **so that** I can use it like a native tool.
 
 ## Acceptance Criteria

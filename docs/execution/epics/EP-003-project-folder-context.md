@@ -1,7 +1,7 @@
 ---
 title: EP-003 — Project Folder Schema and Context
-project: DocForge
-status: draft
+project: Folivm
+status: done
 version: 0.1
 created: 2026-02-20
 depends_on:
@@ -39,10 +39,10 @@ The author creates and opens projects with the standard folder schema. Documents
 
 | ID | Title | Status |
 |----|-------|--------|
-| US-020 | As an author, I want to create a new project so that I get the standard folder schema | Not started |
-| US-021 | As an author, I want to open a project and see my documents so that I can work on them | Not started |
-| US-022 | As an author, I want to open a document from a project and save changes so that my edits persist | Not started |
-| US-023 | As an author, I want to add a brief or context files so that the LLM can use them when assisting | Not started |
+| [US-020](../stories/US-020-create-project.md) | As an author, I want to create a new project so that I get the standard folder schema | Done |
+| [US-021](../stories/US-021-open-project-documents.md) | As an author, I want to open a project and see my documents so that I can work on them | Done |
+| [US-022](../stories/US-022-open-save-document.md) | As an author, I want to open a document from a project and save changes so that my edits persist | Done |
+| [US-023](../stories/US-023-add-context-files.md) | As an author, I want to add a brief or context files so that the LLM can use them when assisting | Not started |
 
 ## Related
 

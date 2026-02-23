@@ -1,6 +1,6 @@
 ---
 title: Functional Requirements Specification
-project: DocForge
+project: Folivm
 status: draft
 version: 0.1
 created: 2026-02-20
@@ -11,13 +11,15 @@ depends_on:
 
 # Functional Requirements Specification
 
-This document formalises the functional requirements for DocForge Phase 0. Requirements are derived from the [PRD (Lean)](../conceptual/prd-lean.md) and maintain traceability via the FR-ID scheme.
+This document formalises the functional requirements for Folivm Phase 0 and Phase 1. Requirements are derived from the [PRD (Lean)](../conceptual/prd-lean.md) and maintain traceability via the FR-ID scheme.
 
 ---
 
 ## Scope
 
-Phase 0 only: the personal tool. The author produces client-ready PDF (and optionally DOCX) from Pandoc Markdown without manual post-processing. Phase 1+ requirements are out of scope.
+**Phase 0.** The personal tool. The author produces client-ready PDF (and optionally DOCX) from Pandoc Markdown without manual post-processing.
+
+**Phase 1.** The shareable tool. Structural mode, deck mode, RAG over project folder, templated conventions. See [Roadmap Phase 1](../planning/roadmap.md).
 
 ---
 
@@ -80,6 +82,54 @@ Phase 0 only: the personal tool. The author produces client-ready PDF (and optio
 
 ---
 
+## 6. Structural (Outline) Mode — Phase 1
+
+| ID | Requirement | Priority | Verification |
+|----|-------------|----------|--------------|
+| FR-6.1 | The system shall provide a structural (outline) mode that displays H1–H4 headings as a collapsible, indented hierarchy with body text hidden. | Must | Switch to structural mode; verify hierarchy display |
+| FR-6.2 | The author shall be able to reorder, promote, and demote headings in structural mode; changes shall update the underlying Folivm source. | Must | Reorder, promote, demote; verify Markdown updated |
+| FR-6.3 | The author shall be able to switch between document and structural mode; all structural changes shall be preserved. | Must | Make structural changes; switch modes; verify preservation |
+| FR-6.4 | LLM assistance shall be available in structural mode (suggest outline, restructure, add missing sections). | Must | Invoke LLM in structural mode; verify suggestions |
+
+*Source.* [PRD § Phase 1 — Structural Mode](../conceptual/prd-lean.md#structural-outline-mode--fr-6x). *Epic.* [EP-108](../execution/epics/EP-108-structural-outline-mode.md).
+
+---
+
+## 7. Deck Mode and PPTX Export — Phase 1
+
+| ID | Requirement | Priority | Verification |
+|----|-------------|----------|--------------|
+| FR-7.1 | The system shall provide a deck mode that renders the document as a slide deck; headings shall define slide boundaries. | Must | Switch to deck mode; verify slide boundaries |
+| FR-7.2 | The system shall export the current document to PPTX using Pandoc (or fallback per ADR). | Must | Export to PPTX; verify output opens in PowerPoint/Keynote |
+| FR-7.3 | The author may specify an optional reference PPTX template for styling. | Should | Export with template; verify styling applied |
+
+*Source.* [PRD § Phase 1 — Deck Mode](../conceptual/prd-lean.md#deck-mode-and-pptx-export--fr-7x). *Epic.* [EP-103](../execution/epics/EP-103-deck-mode-pptx-export.md).
+
+---
+
+## 8. RAG over Project Folder — Phase 1
+
+| ID | Requirement | Priority | Verification |
+|----|-------------|----------|--------------|
+| FR-8.1 | The system shall index project folder contents (inputs/, working/, context/) for retrieval. | Must | Add files to project; verify index updates |
+| FR-8.2 | Each LLM request shall automatically include relevant retrieved chunks from the project folder. | Must | LLM request; inspect payload; verify retrieved context |
+| FR-8.3 | The author shall be able to configure exclusions (folders or files) from RAG indexing. | Should | Exclude folder; verify not in index/retrieval |
+
+*Source.* [PRD § Phase 1 — RAG](../conceptual/prd-lean.md#rag-over-project-folder--fr-8x). *Epic.* [EP-102](../execution/epics/EP-102-rag-project-folder.md).
+
+---
+
+## 9. Templated Project Conventions — Phase 1
+
+| ID | Requirement | Priority | Verification |
+|----|-------------|----------|--------------|
+| FR-9.1 | The system shall provide workflow templates (e.g. consulting report, legal matter, government submission) when creating a project. | Must | Create project; verify template selection available |
+| FR-9.2 | A template shall apply the correct folder structure and optional default context files. | Must | Create from template; verify structure and files |
+
+*Source.* [PRD § Phase 1 — Templated Conventions](../conceptual/prd-lean.md#templated-project-conventions--fr-9x). *Epic.* [EP-107](../execution/epics/EP-107-templated-project-conventions.md).
+
+---
+
 ## Traceability to Backlog
 
 | FR | Epic(s) |
@@ -89,6 +139,10 @@ Phase 0 only: the personal tool. The author produces client-ready PDF (and optio
 | FR-3.x | EP-004 Export PDF and DOCX |
 | FR-4.x | EP-005 LLM assistance |
 | FR-5.x | EP-006 Tauri desktop shell |
+| FR-6.x | EP-108 Structural (outline) mode |
+| FR-7.x | EP-103 Deck mode + PPTX export |
+| FR-8.x | EP-102 RAG over project folder |
+| FR-9.x | EP-107 Templated project conventions |
 
 ---
 

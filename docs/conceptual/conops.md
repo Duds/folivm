@@ -1,6 +1,6 @@
 ---
 title: Concept of Operations (ConOps)
-project: DocForge
+project: Folivm
 status: draft
 version: 0.3
 created: 2026-02-19
@@ -14,7 +14,7 @@ depends_on:
 
 ## Purpose
 
-This document describes how DocForge is used in practice. It grounds the [Solution Concept](../strategic/solution-concept.md) in real people doing real work. Phase 0 is scoped to a single persona — the technical consultant with a Markdown-native, LLM-native workflow — and reflects that scope.
+This document describes how Folivm is used in practice. It grounds the [Solution Concept](../strategic/solution-concept.md) in real people doing real work. Phase 0 is scoped to a single persona — the technical consultant with a Markdown-native, LLM-native workflow — and reflects that scope.
 
 ---
 
@@ -24,7 +24,9 @@ This document describes how DocForge is used in practice. It grounds the [Soluti
 
 **Current pain.** Write in VS Code or Cursor → raw Markdown → run Pandoc manually from the terminal → post-style output in Word → deliver DOCX. Or: write in Markdown, export to PDF with basic styling, and accept unprofessional output. The process is brittle. Every export is manual. The print stylesheet is not under their control. No GUI understands rich Markdown semantics and produces client-grade output.
 
-**Target workflow (DocForge Phase 0).** Create a project → add brief to `context/`, source material to `inputs/` → author in a rich Markdown GUI with Pandoc semantic blocks (fenced divs for callouts, executive summaries) → preview in print view → one-click export to styled PDF or DOCX → deliver. No post-export touch. The author owns the stylesheet and template. The LLM has access to project context when assisting.
+**Target workflow (Folivm Phase 0).** Create a project → add brief to `context/`, source material to `inputs/` → author in a rich Markdown GUI with Pandoc semantic blocks (fenced divs for callouts, executive summaries) → preview in print view → one-click export to styled PDF or DOCX → deliver. No post-export touch. The author owns the stylesheet and template. The LLM has access to project context when assisting.
+
+**Target workflow (Folivm Phase 1 — with structural mode).** Create a project → switch to structural mode → draft or LLM-generate an outline (heading hierarchy) → validate argument architecture, reorder and promote/demote sections → switch to document mode → fill in prose under each heading → export. The structure-first workflow is the professional pattern; Folivm makes it a first-class mode rather than a workaround.
 
 **What they want.** Produce professional client deliverables from Markdown without leaving the Markdown ecosystem. Control the output. Stop manual pandoc runs and Word touch-ups. One tool that bridges LLM-friendly authoring and client-ready output.
 
@@ -32,14 +34,15 @@ This document describes how DocForge is used in practice. It grounds the [Soluti
 
 ## Workflow Comparison
 
-| Step | Current (Pain) | Target (DocForge Phase 0) |
-|------|----------------|---------------------------|
-| Create project | Ad hoc folder structure | New project with standard schema: `inputs/`, `working/`, `context/`, `deliverables/` |
-| Load context | Manually open files, copy-paste | Editor loads brief and selected files from project |
-| Author | VS Code + raw Markdown | Rich Markdown GUI (TipTap) with Pandoc semantic blocks |
-| Preview | None, or separate viewer | Integrated print preview |
-| Export | Terminal pandoc, manual options | One-click PDF/DOCX with configured stylesheet |
-| Post-process | Open in Word, fix styles | None — output is ready to deliver |
+| Step | Current (Pain) | Target (Phase 0) | Target (Phase 1+) |
+|------|----------------|------------------|-------------------|
+| Create project | Ad hoc folder structure | Standard schema: `inputs/`, `working/`, `context/`, `deliverables/` | Same + templated conventions |
+| Structure document | Linear drafting or ad hoc outline in a notes file | Heading-first in document mode | Structural mode — collapsible heading tree, drag to reorder, LLM outline generation |
+| Load context | Manually open files, copy-paste | Editor loads brief and selected files from project | RAG over full project |
+| Author | VS Code + raw Markdown | Rich Markdown GUI (TipTap) with Pandoc semantic blocks | Same + data/visual cells, deck mode |
+| Preview | None, or separate viewer | Integrated print preview | Mode-aware preview (document / deck) |
+| Export | Terminal pandoc, manual options | One-click PDF/DOCX with configured stylesheet | One-click PPTX; CSV/XLSX Phase 2 |
+| Post-process | Open in Word, fix styles | None — output is ready to deliver | Same |
 
 ---
 
@@ -72,9 +75,9 @@ These personas are relevant for Phase 1 and Phase 2. Phase 0 serves only the tec
 
 | Persona | Role | Phase 1 | Phase 2 |
 |---------|------|---------|---------|
-| Maya | Senior Consultant, Professional Services | Shareable tool, project-context | Clause library, brand manifest |
-| Priya | Senior Policy Officer, Government | — | Mandatory clauses, accessibility, IRAP |
-| James | Business Development, Legal/Advisory | — | Clause library, assembly engine |
+| Maya | Senior Consultant, Professional Services | Structural mode, deck mode, shareable tool | Clause library, brand manifest |
+| Priya | Senior Policy Officer, Government | Structural mode, document mode | Mandatory clauses, accessibility, IRAP |
+| James | Business Development, Legal/Advisory | Structural mode, deck mode | Clause library, assembly engine |
 | Sarah | Brand and Communications Lead | — | Brand manifest, theme management |
 
 ---
@@ -83,7 +86,7 @@ These personas are relevant for Phase 1 and Phase 2. Phase 0 serves only the tec
 
 **In scope.** Single-author document creation. Project folder schema. Rich Pandoc Markdown GUI (TipTap). Print stylesheet. One-click PDF/DOCX export via Pandoc. LLM assistance with project context. Local-first Tauri desktop app.
 
-**Out of scope (Phase 0).** Clause library, assembly engine, brand manifest, multi-user collaboration, server-hosted deployment, DMS integration, accessibility validation. These are Phase 1+.
+**Out of scope (Phase 0).** Structural (outline) mode, clause library, assembly engine, brand manifest, deck mode, multi-user collaboration, server-hosted deployment, DMS integration, accessibility validation. These are Phase 1+.
 
 ---
 

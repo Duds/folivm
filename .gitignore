@@ -1,6 +1,15 @@
 # Virtual environment (used for RAIDD generator)
 .venv/
 
+# Dependencies and build
+node_modules/
+dist/
+.pnpm-store/
+.temp-scaffold/
+
+# Tauri
+src-tauri/target/
+
 # OS and editor
 .DS_Store
 *.swp

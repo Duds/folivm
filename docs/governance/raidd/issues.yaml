@@ -51,10 +51,11 @@ issues:
     date_added: "2026-02-19"
     resolution: null
   - id: I-007
-    issue: "Monetisation model unresolved (SaaS vs perpetual vs open-core)"
+    issue: "Monetisation model — three-tier architecture adopted as direction; requires validation and detailed design"
     severity: Medium
-    impact: "Affects pricing and open-source format strategy"
+    impact: "Affects pricing, go-to-market, infrastructure requirements, and open-source format strategy"
     owner: TBD
-    status: Open
+    status: "In progress"
     date_added: "2026-02-19"
-    resolution: null
+    date_updated: "2026-02-22"
+    resolution: "Direction set (2026-02-22): three-tier model — (1) Folivm core tool: one-time purchase, local-first, no account required; (2) Folivm AI: optional subscription, managed LLM proxy service, removes BYOK friction; (3) Folivm Sync: optional subscription, thin cloud sync for multi-device, analogous to Obsidian Sync. See DEC-017 and operating-model.md. Requires: pricing validation, infrastructure design for AI proxy, BYOK escape hatch for government/enterprise, commitment covenant (core tool features never gated behind subscriptions)."

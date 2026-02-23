@@ -1,6 +1,6 @@
 ---
 title: US-003 — Add fenced div blocks (callout, executive-summary)
-project: DocForge
+project: Folivm
 status: draft
 version: 0.1
 created: 2026-02-20
@@ -27,4 +27,4 @@ epic: EP-001
 
 ---
 
-*Previous: [US-002](US-002-headings-lists-tables.md) · Next: [US-004](../epics/EP-001-rich-markdown-editor.md#stories)*
+*Previous: [US-002](US-002-headings-lists-tables.md) · Next: [US-004](US-004-edit-frontmatter.md)*

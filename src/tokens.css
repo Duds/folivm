@@ -1,0 +1,305 @@
+/* Folivm Design Token System
+   Figma-first: primitives → semantic aliases → component tokens
+   Application chrome only — document-level brand is Phase 2 (EP-201)
+*/
+
+/* ==========================================================================
+   Layer 1 — Primitives (Figma: Primitives page)
+   Raw values. Components reference semantic aliases, never primitives.
+   ========================================================================== */
+
+:root {
+  /* — Colour primitives — */
+  --primitive-neutral-0: #ffffff;
+  --primitive-neutral-50: #f9f7f5;
+  --primitive-neutral-100: #f2efeb;
+  --primitive-neutral-200: #e8e4df;
+  --primitive-neutral-300: #d4cfc9;
+  --primitive-neutral-400: #a09890;
+  --primitive-neutral-500: #6b6560;
+  --primitive-neutral-600: #4a4540;
+  --primitive-neutral-700: #2e2a27;
+  --primitive-neutral-800: #1a1714;
+  --primitive-neutral-900: #0d0b09;
+
+  --primitive-blue-50: #eef4ff;
+  --primitive-blue-100: #ddeaff;
+  --primitive-blue-300: #91b8ff;
+  --primitive-blue-500: #2d6bff;
+  --primitive-blue-700: #1a4fcc;
+  --primitive-blue-900: #0a2166;
+
+  --primitive-teal-50: #edfaf8;
+  --primitive-teal-100: #ccefeb;
+  --primitive-teal-300: #5fccbf;
+  --primitive-teal-500: #0d9488;
+  --primitive-teal-700: #0a7069;
+
+  --primitive-amber-50: #fffbeb;
+  --primitive-amber-300: #fcd34d;
+  --primitive-amber-500: #d97706;
+
+  --primitive-red-50: #fef2f2;
+  --primitive-red-500: #dc2626;
+
+  /* — Typography primitives — */
+  --primitive-font-ui: "Inter", system-ui, -apple-system, sans-serif;
+  --primitive-font-body: Georgia, "Times New Roman", serif;
+  --primitive-font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
+
+  --primitive-size-xs: 11px;
+  --primitive-size-sm: 13px;
+  --primitive-size-base: 15px;
+  --primitive-size-md: 17px;
+  --primitive-size-lg: 20px;
+  --primitive-size-xl: 24px;
+  --primitive-size-2xl: 30px;
+  --primitive-size-3xl: 36px;
+
+  --primitive-weight-regular: 400;
+  --primitive-weight-medium: 500;
+  --primitive-weight-semibold: 600;
+  --primitive-weight-bold: 700;
+
+  --primitive-leading-tight: 1.3;
+  --primitive-leading-normal: 1.6;
+  --primitive-leading-loose: 1.75;
+
+  /* — Spacing primitives — */
+  --primitive-space-1: 4px;
+  --primitive-space-2: 8px;
+  --primitive-space-3: 12px;
+  --primitive-space-4: 16px;
+  --primitive-space-5: 20px;
+  --primitive-space-6: 24px;
+  --primitive-space-8: 32px;
+  --primitive-space-10: 40px;
+  --primitive-space-12: 48px;
+  --primitive-space-16: 64px;
+
+  /* — Radius primitives — */
+  --primitive-radius-sm: 4px;
+  --primitive-radius-md: 6px;
+  --primitive-radius-lg: 8px;
+  --primitive-radius-xl: 12px;
+  --primitive-radius-pill: 9999px;
+
+  /* — Shadow primitives — */
+  --primitive-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+  --primitive-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.04);
+  --primitive-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================================================
+   Layer 2 — Semantic aliases (Figma: Styles panel)
+   Default mode: Folivm Light. Modes re-resolve these via data-mode/data-brand.
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --color-overlay-backdrop: rgba(0, 0, 0, 0.4);
+  --color-surface-app: var(--primitive-neutral-100);
+  --color-surface-sidebar: var(--primitive-neutral-200);
+  --color-surface-canvas: var(--primitive-neutral-0);
+  --color-surface-overlay: var(--primitive-neutral-0);
+  --color-surface-sunken: var(--primitive-neutral-50);
+  --color-surface-raised: var(--primitive-neutral-0);
+
+  /* Text */
+  --color-text-primary: var(--primitive-neutral-800);
+  --color-text-secondary: var(--primitive-neutral-500);
+  --color-text-tertiary: var(--primitive-neutral-400);
+  --color-text-placeholder: var(--primitive-neutral-300);
+  --color-text-inverse: var(--primitive-neutral-0);
+  --color-text-link: var(--primitive-blue-500);
+
+  /* Borders */
+  --color-border-subtle: var(--primitive-neutral-200);
+  --color-border-default: var(--primitive-neutral-300);
+  --color-border-strong: var(--primitive-neutral-400);
+
+  /* Brand */
+  --color-brand-primary: var(--primitive-blue-500);
+  --color-brand-primary-hover: var(--primitive-blue-700);
+  --color-brand-primary-subtle: var(--primitive-blue-50);
+  --color-brand-secondary: var(--primitive-teal-500);
+  --color-brand-secondary-subtle: var(--primitive-teal-50);
+
+  /* Semantic block tokens — editor surface */
+  --color-block-callout-border: var(--primitive-blue-500);
+  --color-block-callout-fill: var(--primitive-blue-50);
+  --color-block-callout-text: var(--primitive-blue-900);
+  --color-block-execsummary-border: var(--primitive-teal-500);
+  --color-block-execsummary-fill: var(--primitive-teal-50);
+  --color-block-execsummary-text: var(--primitive-teal-700);
+  --color-block-warning-border: var(--primitive-amber-500);
+  --color-block-warning-fill: var(--primitive-amber-50);
+
+  /* Interactive states */
+  --color-interactive-hover: rgba(0, 0, 0, 0.04);
+  --color-interactive-active: rgba(0, 0, 0, 0.08);
+  --color-interactive-selected: var(--primitive-blue-50);
+  --color-interactive-selected-text: var(--primitive-blue-700);
+
+  /* Status */
+  --color-status-error: var(--primitive-red-500);
+  --color-status-error-fill: var(--primitive-red-50);
+  --color-status-warning: var(--primitive-amber-500);
+  --color-status-success: var(--primitive-teal-500);
+
+  /* Typography */
+  --font-ui: var(--primitive-font-ui);
+  --font-body: var(--primitive-font-body);
+  --font-mono: var(--primitive-font-mono);
+
+  --text-ui-xs: var(--primitive-size-xs);
+  --text-ui-sm: var(--primitive-size-sm);
+  --text-ui-base: var(--primitive-size-base);
+  --text-ui-lg: var(--primitive-size-lg);
+
+  --text-doc-body: var(--primitive-size-base);
+  --text-doc-h1: var(--primitive-size-3xl);
+  --text-doc-h2: var(--primitive-size-xl);
+  --text-doc-h3: var(--primitive-size-lg);
+  --text-doc-h4: var(--primitive-size-base);
+  --text-doc-small: var(--primitive-size-sm);
+  --text-doc-leading: var(--primitive-leading-loose);
+
+  /* Spacing */
+  --space-panel-x: var(--primitive-space-4);
+  --space-panel-y: var(--primitive-space-4);
+  --space-canvas-x: var(--primitive-space-16);
+  --space-canvas-y: var(--primitive-space-12);
+  --space-block-gap: var(--primitive-space-6);
+
+  /* Layout */
+  --layout-sidebar-width: 240px;
+  --layout-assistant-width: 320px;
+  --layout-chrome-height: 32px;
+  --layout-topbar-height: 40px;
+  --layout-canvas-max-width: 720px;
+  --layout-rail-width: 40px;
+
+  /* Shadows */
+  --shadow-canvas: var(--primitive-shadow-md);
+  --shadow-popover: var(--primitive-shadow-lg);
+  --shadow-toolbar: var(--primitive-shadow-sm);
+
+  /* Radius */
+  --radius-block: var(--primitive-radius-md);
+  --radius-button: var(--primitive-radius-md);
+  --radius-toolbar: var(--primitive-radius-pill);
+  --radius-input: var(--primitive-radius-md);
+  --radius-card: var(--primitive-radius-lg);
+  --radius-popover: var(--primitive-radius-md);
+
+  /* Transitions */
+  --transition-fast: 120ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* Focus ring — accessibility */
+  --focus-ring: 2px solid var(--color-brand-primary);
+  --focus-ring-offset: 2px;
+}
+
+/* Mode: Focus — dissolves panel borders, reduces sidebar contrast */
+[data-mode="focus"] {
+  --color-surface-sidebar: var(--primitive-neutral-100);
+  --color-border-subtle: transparent;
+  --color-border-default: transparent;
+}
+
+/* Mode: Client Brand A — proof-of-concept for Phase 2 brand manifest */
+[data-brand="client-a"] {
+  --color-brand-primary: #e8542a;
+  --color-brand-primary-hover: #c43e18;
+  --color-brand-primary-subtle: #fef0ec;
+  --color-block-callout-border: #e8542a;
+  --color-block-callout-fill: #fef0ec;
+  --color-block-callout-text: #7a1f08;
+}
+
+/* ==========================================================================
+   Layer 3 — Component tokens (Figma: component local variables)
+   ========================================================================== */
+
+.btn {
+  --btn-bg: var(--color-brand-primary);
+  --btn-bg-hover: var(--color-brand-primary-hover);
+  --btn-text: var(--color-text-inverse);
+  --btn-radius: var(--radius-button);
+  --btn-font-size: var(--text-ui-base);
+  --btn-padding-x: var(--primitive-space-4);
+  --btn-padding-y: var(--primitive-space-2);
+
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: var(--btn-radius);
+  font-family: var(--font-ui);
+  font-size: var(--btn-font-size);
+  font-weight: var(--primitive-weight-medium);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.btn:hover {
+  background: var(--btn-bg-hover);
+}
+.btn:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--color-interactive-hover);
+  --btn-text: var(--color-text-secondary);
+}
+
+.btn-ghost:hover {
+  color: var(--color-text-primary);
+}
+
+.btn-ghost:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.btn-icon {
+  padding: var(--primitive-space-2);
+  width: var(--layout-topbar-height);
+  height: var(--layout-topbar-height);
+  min-width: var(--layout-topbar-height);
+  min-height: var(--layout-topbar-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-item {
+  --item-bg-hover: var(--color-interactive-hover);
+  --item-bg-active: var(--color-interactive-selected);
+  --item-text-active: var(--color-interactive-selected-text);
+  --item-radius: var(--primitive-radius-sm);
+}
+
+.block-callout {
+  --block-border-color: var(--color-block-callout-border);
+  --block-bg: var(--color-block-callout-fill);
+  --block-text: var(--color-block-callout-text);
+}
+
+.block-executive-summary {
+  --block-border-color: var(--color-block-execsummary-border);
+  --block-bg: var(--color-block-execsummary-fill);
+  --block-text: var(--color-block-execsummary-text);
+}

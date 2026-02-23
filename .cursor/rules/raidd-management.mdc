@@ -5,7 +5,7 @@ globs: ["docs/governance/raidd/**", "docs/governance/raid.md", "scripts/generate
 ---
 # RAIDD management (RAIDD as code)
 
-DocForge keeps **Risks, Assumptions, Issues, Dependencies, and Decisions** in structured YAML. The rendered log is generated from that source. Follow this rule when adding, updating, or discussing RAIDD items.
+Folivm keeps **Risks, Assumptions, Issues, Dependencies, and Decisions** in structured YAML. The rendered log is generated from that source. Follow this rule when adding, updating, or discussing RAIDD items.
 
 ## Source of truth
 

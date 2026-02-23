@@ -1,6 +1,6 @@
 ---
 title: ADR-0004 — TipTap for Editor Framework
-project: DocForge
+project: Folivm
 status: accepted
 version: 0.1
 created: 2026-02-20
@@ -16,7 +16,7 @@ Accepted
 
 ## Context
 
-DocForge Phase 0 requires a rich text editor that:
+Folivm Phase 0 requires a rich text editor that:
 - Edits Pandoc Markdown with extended syntax (fenced divs, YAML frontmatter, footnotes, citations)
 - Supports custom semantic blocks (e.g. `:::callout`, `:::executive-summary`)
 - Preserves structure through round-trip editing
@@ -45,11 +45,11 @@ The editor runs inside Tauri's WebView. The choice is which editor framework to 
 
 1. **ProseMirror foundation.** TipTap wraps ProseMirror, the battle-tested rich text engine used by Notion and others. ProseMirror provides schema enforcement, transaction model, and collaborative editing support. Native contenteditable lacks all of this; building equivalent capability from scratch is a multi-month undertaking.
 
-2. **Custom node types for Pandoc semantic blocks.** DocForge needs fenced divs (`:::callout`, `:::executive-summary`, etc.). TipTap's extension model supports custom node types that map directly to Pandoc's block structure. The editor can produce valid Pandoc Markdown; round-trip editing preserves structure.
+2. **Custom node types for Pandoc semantic blocks.** Folivm needs fenced divs (`:::callout`, `:::executive-summary`, etc.). TipTap's extension model supports custom node types that map directly to Pandoc's block structure. The editor can produce valid Pandoc Markdown; round-trip editing preserves structure.
 
 3. **Schema enforcement.** Documents have a defined structure. TipTap enforces what blocks are valid where. This aligns with "the document is the data" — structure is explicit, not implicit.
 
-4. **Headless and extensible.** TipTap does not impose a fixed UI. DocForge can apply its own styling (print CSS, brand themes). Extensions are modular; we load only what we need.
+4. **Headless and extensible.** TipTap does not impose a fixed UI. Folivm can apply its own styling (print CSS, brand themes). Extensions are modular; we load only what we need.
 
 5. **Mature ecosystem.** ProseMirror has been developed for years. TipTap provides a developer-friendly API on top. Lexical and Slate are viable but less proven for document-type editing with custom semantics.
 

@@ -1,6 +1,6 @@
 ---
 title: Non-Functional Requirements
-project: DocForge
+project: Folivm
 status: draft
 version: 0.2
 created: 2026-02-19
@@ -13,7 +13,7 @@ depends_on:
 
 # Non-Functional Requirements
 
-This document defines measurable non-functional requirements for DocForge. Phase 0 is the primary scope; Phase 1+ requirements are noted where they extend or replace Phase 0.
+This document defines measurable non-functional requirements for Folivm. Phase 0 is the primary scope; Phase 1+ requirements are noted where they extend or replace Phase 0.
 
 ---
 
@@ -65,7 +65,7 @@ This document defines measurable non-functional requirements for DocForge. Phase
 | NFR-4.1 | Document content at rest shall be protected by the host OS | No additional encryption; relies on user/OS file permissions | 0 |
 | NFR-4.2 | LLM API credentials shall be stored securely | API keys stored in OS credential store (e.g. macOS Keychain, Windows Credential Manager); never in plain text in config | 0 |
 | NFR-4.3 | Data in transit to LLM providers shall use TLS | All API calls over HTTPS | 0 |
-| NFR-4.4 | No telemetry or analytics without explicit opt-in | No data sent to DocForge or third parties except LLM provider (user-configured); no crash reporting without consent | 0 |
+| NFR-4.4 | No telemetry or analytics without explicit opt-in | No data sent to Folivm or third parties except LLM provider (user-configured); no crash reporting without consent | 0 |
 
 *Rationale.* Phase 0 stores documents as plain-text files. Security focuses on credential handling and minimising data exfiltration. Full security and data sovereignty treatment is in [Security & Data](security-data.md).
 
@@ -111,7 +111,7 @@ This document defines measurable non-functional requirements for DocForge. Phase
 
 | ID | Requirement | Measure | Phase |
 |----|-------------|---------|-------|
-| NFR-8.1 | Australian Privacy Act | No personal data collected by DocForge; document content remains under user control; LLM provider policies apply to content sent to APIs | 0 |
+| NFR-8.1 | Australian Privacy Act | No personal data collected by Folivm; document content remains under user control; LLM provider policies apply to content sent to APIs | 0 |
 | NFR-8.2 | Australian government (ISM, IRAP) | Not applicable to Phase 0 (local desktop). Phase 2 for government deployment; ADR-0001 outlines pluggable providers and Australian-region endpoints | 2 |
 
 *Rationale.* Phase 0 is a personal tool with no backend. Compliance focus is minimal data handling and clear documentation of LLM data flow.
@@ -123,7 +123,7 @@ This document defines measurable non-functional requirements for DocForge. Phase
 | ID | Requirement | Measure | Phase |
 |----|-------------|---------|-------|
 | NFR-9.1 | Storage format shall be editable with any text editor | Documents are plain-text Pandoc Markdown; no proprietary binary | 0 |
-| NFR-9.2 | Storage format shall be processable with Pandoc directly | Documents can be exported to PDF/DOCX using standard Pandoc CLI without DocForge | 0 |
+| NFR-9.2 | Storage format shall be processable with Pandoc directly | Documents can be exported to PDF/DOCX using standard Pandoc CLI without Folivm | 0 |
 | NFR-9.3 | No lock-in | No proprietary schema; format documentation is a Phase 0 deliverable | 0 |
 
 *Rationale.* Derived from [principle 7](principles.md#7-open-format-closed-renderer). Portability builds trust; the format is the escape hatch.
@@ -150,7 +150,7 @@ This document defines measurable non-functional requirements for DocForge. Phase
 | NFR-11.2 | Learning curve | A user familiar with Markdown and Pandoc concepts shall be productive within 30 minutes | 0 |
 | NFR-11.3 | Error messages | Export and LLM errors shall include actionable guidance where possible | 0 |
 
-*Rationale.* Phase 0 success metric is the author using DocForge for their next real deliverable. Onboarding friction must be low.
+*Rationale.* Phase 0 success metric is the author using Folivm for their next real deliverable. Onboarding friction must be low.
 
 ---
 
@@ -160,7 +160,7 @@ This document defines measurable non-functional requirements for DocForge. Phase
 |----|-------------|---------|-------|
 | NFR-12.1 | Component boundaries | GUI, storage, export, and LLM layers are separated; changes in one layer minimise impact on others | 0 |
 | NFR-12.2 | LLM provider pluggability | Provider, region, and model are configuration; adding a new provider does not require code changes to core editor | 0 |
-| NFR-12.3 | Format evolution | DocForge-specific conventions (frontmatter, project schema) are documented; format changes are additive where possible | 0 |
+| NFR-12.3 | Format evolution | Folivm-specific conventions (frontmatter, project schema) are documented; format changes are additive where possible | 0 |
 
 *Rationale.* Derived from [HLA](hla.md) and [principles](principles.md). Phase 0 establishes architecture that Phase 1+ extends without redesign.
 

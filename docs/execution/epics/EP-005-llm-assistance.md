@@ -1,9 +1,10 @@
 ---
 title: EP-005 — LLM Assistance with Project Context
-project: DocForge
-status: draft
-version: 0.1
+project: Folivm
+status: done
+version: 0.2
 created: 2026-02-20
+updated: 2026-02-23
 depends_on:
   - docs/conceptual/prd-lean.md
   - docs/strategic/solution-concept.md
@@ -39,10 +40,10 @@ The author requests LLM assistance on demand. Each request includes the current 
 
 | ID | Title | Status |
 |----|-------|--------|
-| US-040 | As an author, I want to request LLM assistance with my document so that I can draft or refine content | Not started |
-| US-041 | As an author, I want the LLM to receive my brief and selected context files so that it has project context | Not started |
-| US-042 | As an author, I want to accept or reject AI suggestions before they enter the document so that I stay in control | Not started |
-| US-043 | As an author, I want to configure my LLM provider (API key, model) so that I can use my preferred service | Not started |
+| [US-040](../stories/US-040-request-llm-assistance.md) | As an author, I want to request LLM assistance with my document so that I can draft or refine content | Done |
+| [US-041](../stories/US-041-llm-project-context.md) | As an author, I want the LLM to receive my brief and selected context files so that it has project context | Done |
+| [US-042](../stories/US-042-accept-reject-suggestions.md) | As an author, I want to accept or reject AI suggestions before they enter the document so that I stay in control | Done |
+| [US-043](../stories/US-043-configure-llm-provider.md) | As an author, I want to configure my LLM provider (API key, model) so that I can use my preferred service | Done |
 
 ## Related
 

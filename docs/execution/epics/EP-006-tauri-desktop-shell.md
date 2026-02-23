@@ -1,7 +1,7 @@
 ---
 title: EP-006 — Tauri Desktop Shell
-project: DocForge
-status: draft
+project: Folivm
+status: done
 version: 0.1
 created: 2026-02-20
 depends_on:
@@ -9,11 +9,11 @@ depends_on:
   - docs/conceptual/prd-lean.md
 ---
 
-# EP-006 — Author can run DocForge as a local Tauri desktop application
+# EP-006 — Author can run Folivm as a local Tauri desktop application
 
 ## Outcome
 
-DocForge runs as a desktop application on macOS, Windows, and Linux. No server or cloud dependency for core operation. The Tauri shell hosts the TipTap editor, provides file system access for projects, and invokes Pandoc for export. Documents are plain-text files on disk.
+Folivm runs as a desktop application on macOS, Windows, and Linux. No server or cloud dependency for core operation. The Tauri shell hosts the TipTap editor, provides file system access for projects, and invokes Pandoc for export. Documents are plain-text files on disk.
 
 ## Scope
 
@@ -41,9 +41,9 @@ DocForge runs as a desktop application on macOS, Windows, and Linux. No server o
 
 | ID | Title | Status |
 |----|-------|--------|
-| US-050 | As an author, I want to launch DocForge as a desktop app so that I can use it like a native tool | Not started |
-| US-051 | As an author, I want the app to access my project folder so that I can work with my documents | Not started |
-| US-052 | As an author, I want export to invoke Pandoc so that PDF/DOCX are generated correctly | Not started |
+| [US-050](../stories/US-050-launch-desktop-app.md) | As an author, I want to launch Folivm as a desktop app so that I can use it like a native tool | Done |
+| [US-051](../stories/US-051-project-folder-access.md) | As an author, I want the app to access my project folder so that I can work with my documents | Done |
+| [US-052](../stories/US-052-pandoc-invocation.md) | As an author, I want export to invoke Pandoc so that PDF/DOCX are generated correctly | Done |
 
 ## Related
 
@@ -52,4 +52,4 @@ DocForge runs as a desktop application on macOS, Windows, and Linux. No server o
 
 ---
 
-*Previous: [EP-005](EP-005-llm-assistance.md) · Next: [Backlog](../backlog.md)*
+*Previous: [EP-005](EP-005-llm-assistance.md) · Next: [EP-007](EP-007-format-documentation.md)*

@@ -1,6 +1,6 @@
 ---
 title: ADR-0003 — Tauri for Desktop Framework
-project: DocForge
+project: Folivm
 status: accepted
 version: 0.1
 created: 2026-02-20
@@ -16,7 +16,7 @@ Accepted
 
 ## Context
 
-DocForge Phase 0 requires a desktop application wrapper for the Markdown GUI editor. The editor is a web-based UI (TipTap/ProseMirror); it needs a native shell for local-first desktop deployment. The solution concept specified "Electron or Tauri for desktop." A decision was needed before implementation.
+Folivm Phase 0 requires a desktop application wrapper for the Markdown GUI editor. The editor is a web-based UI (TipTap/ProseMirror); it needs a native shell for local-first desktop deployment. The solution concept specified "Electron or Tauri for desktop." A decision was needed before implementation.
 
 Key requirements:
 - Cross-platform desktop (macOS, Windows, Linux)
@@ -40,9 +40,9 @@ Key requirements:
 
 ### Why Tauri
 
-1. **Lightweight.** DocForge Phase 0 is a personal tool. A 2–10 MB installer and 30–50 MB memory footprint are appropriate. Electron's 80–150 MB installer and 150–300 MB idle use are overkill for an editor that primarily edits Markdown files and calls Pandoc.
+1. **Lightweight.** Folivm Phase 0 is a personal tool. A 2–10 MB installer and 30–50 MB memory footprint are appropriate. Electron's 80–150 MB installer and 150–300 MB idle use are overkill for an editor that primarily edits Markdown files and calls Pandoc.
 
-2. **Native WebView.** Tauri uses the OS WebView (WebKit on macOS, WebView2 on Windows, WebKitGTK on Linux). No bundled Chromium. The app starts faster and feels lighter. DocForge does not need Chromium-specific APIs.
+2. **Native WebView.** Tauri uses the OS WebView (WebKit on macOS, WebView2 on Windows, WebKitGTK on Linux). No bundled Chromium. The app starts faster and feels lighter. Folivm does not need Chromium-specific APIs.
 
 3. **Security model.** Tauri's capability-based permissions are secure-by-default — everything disabled until explicitly enabled. Phase 0 needs local file read/write and subprocess execution (Pandoc). Tauri's permission model aligns with these needs without the hardening burden of context isolation, preload scripts, and CSP that Electron requires.
 
@@ -52,7 +52,7 @@ Key requirements:
 
 ### Why Not Electron
 
-Electron would work, but it is heavier than necessary for Phase 0. The maturity argument (VS Code, Slack) applies to large, complex applications. DocForge Phase 0 is a focused editor. Tauri's smaller footprint and security posture are better aligned.
+Electron would work, but it is heavier than necessary for Phase 0. The maturity argument (VS Code, Slack) applies to large, complex applications. Folivm Phase 0 is a focused editor. Tauri's smaller footprint and security posture are better aligned.
 
 ## Consequences
 

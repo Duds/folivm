@@ -1,16 +1,16 @@
-# DocForge Drafter
+# Folivm Drafter
 
 ## Overview
 
-Draft or extend a DocForge project document using the docforge-drafter skill. The agent loads project context from NOTES.md and upstream documents, then produces a draft consistent with the artefact hierarchy and project standards.
+Draft or extend a Folivm project document using the Folivm-drafter skill. The agent loads project context from NOTES.md and upstream documents, then produces a draft consistent with the artefact hierarchy and project standards.
 
 ## Objective
 
-Use the docforge-drafter skill to create or extend a target document. Follow the skill's full workflow: load context, identify the artefact, draft, add navigation links, and flag open questions.
+Use the Folivm-drafter skill to create or extend a target document. Follow the skill's full workflow: load context, identify the artefact, draft, add navigation links, and flag open questions.
 
 ## Instructions
 
-1. **Read the skill**: Load and follow `skills/docforge-drafter/SKILL.md` in full.
+1. **Read the skill**: Load and follow `skills/folivm-drafter/SKILL.md` in full.
 
 2. **Identify the target**: The user will specify which document to draft. If not yet specified, prompt for:
    - **Artefact name** (e.g. `problem-statement`, `prd-lean`, `hla`, `backlog`, `raid`)

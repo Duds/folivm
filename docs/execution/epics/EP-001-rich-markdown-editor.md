@@ -1,7 +1,7 @@
 ---
 title: EP-001 — Rich Markdown Editor
-project: DocForge
-status: draft
+project: Folivm
+status: in progress
 version: 0.1
 created: 2026-02-20
 depends_on:
@@ -39,10 +39,10 @@ The author edits documents in a GUI that supports Pandoc extended Markdown. Outp
 
 | ID | Title | Status |
 |----|-------|--------|
-| US-001 | As an author, I want to create and save a new document so that I can start from scratch | Not started |
-| US-002 | As an author, I want to add headings, lists, and tables so that I can structure my content | Not started |
-| US-003 | As an author, I want to add fenced div blocks (callout, executive-summary) so that I can use semantic structure | Not started |
-| US-004 | As an author, I want to edit YAML frontmatter so that I can set document metadata | Not started |
+| [US-001](../stories/US-001-create-save-document.md) | As an author, I want to create and save a new document so that I can start from scratch | Done |
+| [US-002](../stories/US-002-headings-lists-tables.md) | As an author, I want to add headings, lists, and tables so that I can structure my content | Done |
+| [US-003](../stories/US-003-fenced-div-blocks.md) | As an author, I want to add fenced div blocks (callout, executive-summary) so that I can use semantic structure | Done |
+| [US-004](../stories/US-004-edit-frontmatter.md) | As an author, I want to edit YAML frontmatter so that I can set document metadata | Not started |
 
 ## Related
 

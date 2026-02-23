@@ -1,6 +1,6 @@
 ---
 title: ADR-0002 — DOCX/PPTX Export Library Selection
-project: DocForge
+project: Folivm
 status: proposed
 version: 0.1
 created: 2026-02-20
@@ -19,7 +19,7 @@ Proposed
 
 ## Context
 
-DocForge must export documents to DOCX (Phase 0) and PPTX (Phase 1+). Export fidelity is a product requirement: output must be professionally acceptable without manual correction (see [principles](../principles.md) and [PRD NFRs](../../conceptual/prd-lean.md)).
+Folivm must export documents to DOCX (Phase 0) and PPTX (Phase 1+). Export fidelity is a product requirement: output must be professionally acceptable without manual correction (see [principles](../principles.md) and [PRD NFRs](../../conceptual/prd-lean.md)).
 
 The export pipeline choice affects:
 - Quality and fidelity of output

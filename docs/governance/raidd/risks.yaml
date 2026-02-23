@@ -1,12 +1,13 @@
 # Risks. ID format: R-XXX. Likelihood: Low | Medium | High. Impact: Low | Medium | High | Critical.
 # status: Open | Mitigating | Resolved | Accepted
 # Optional: date_resolved
+# Last cleaned: 2026-02-22 — removed duplicate R-007, R-008 entries from earlier refactor session.
 risks:
   - id: R-001
     risk: "DOCX/PPTX export fidelity insufficient for professional use (manual correction required)"
     likelihood: High
     impact: Critical
-    mitigation: "Technical spike against Engagement Letter, Board Paper, Cabinet Submission before customer commitment; validate with selected export library"
+    mitigation: "Technical spike against a real client document type (e.g. advisory report or board paper) before any external commitment on quality; validate print stylesheet and reference template thoroughly"
     owner: TBD
     status: Open
     date_added: "2026-02-19"
@@ -51,18 +52,34 @@ risks:
     status: Open
     date_added: "2026-02-19"
   - id: R-007
-    risk: "Pandoc export fidelity insufficient — print stylesheet and reference DOCX may not produce professional output without significant investment"
+    risk: "Pandoc + CSS print stylesheet does not produce professional-quality PDF without significant investment"
     likelihood: Medium
     impact: High
-    mitigation: "Invest in CSS and reference DOCX template; validate against representative document types before Phase 0 completion"
+    mitigation: "Technical spike against a real client document type before claiming export quality; budget time for stylesheet iteration; evaluate Lua filters and pandoc-crossref early"
     owner: TBD
     status: Open
-    date_added: "2026-02-20"
+    date_added: "2026-02-22"
   - id: R-008
-    risk: "GUI complexity for Pandoc semantic blocks — rendering fenced divs (e.g. :::callout) as WYSIWYG nodes in TipTap requires custom node types; non-trivial"
+    risk: "TipTap WYSIWYG rendering of Pandoc fenced divs (:::callout, :::executive-summary) is non-trivial; custom ProseMirror nodes may be brittle or incomplete"
     likelihood: Medium
     impact: High
-    mitigation: "Technical spike on TipTap custom nodes for Pandoc fenced divs; consider progressive enhancement (raw block initially) if full WYSIWYG is deferred"
+    mitigation: "Build a focused PoC for the two or three most important semantic block types before committing to TipTap; assess Slate and Lexical as alternatives if PoC reveals blocking limitations"
     owner: TBD
     status: Open
-    date_added: "2026-02-20"
+    date_added: "2026-02-22"
+  - id: R-009
+    risk: "Deck mode (Phase 1) visual quality insufficient for client deliverables; clients expect Figma/Canva production quality"
+    likelihood: High
+    impact: Medium
+    mitigation: "Set honest expectations: deck mode provides structural fidelity (right content, right slides); pixel-perfect design remains a separate step for high-production artefacts. Validate this framing with target users before building. Invest in a strong reference PPTX template to raise the quality floor."
+    owner: TBD
+    status: Open
+    date_added: "2026-02-22"
+  - id: R-010
+    risk: "Sheet mode formula language design is high-risk; choosing wrong execution model creates technical debt that is expensive to reverse"
+    likelihood: Medium
+    impact: Critical
+    mitigation: "Do not design the formula language until sheet mode is prioritised (Phase 2). Use real user data from sheet mode usage to inform the design. Consider whether a subset of Excel formula syntax is sufficient rather than inventing a new language."
+    owner: TBD
+    status: Open
+    date_added: "2026-02-22"

@@ -1,14 +1,17 @@
 # Assumptions. ID format: A-XXX. validated: Yes | No | Partially | Reasonable.
 # status: Open | Validated | Invalidated
 # Optional: date_validated
+# Last updated: 2026-02-22 — A-001 rewritten; A-009 and A-010 added.
 assumptions:
   - id: A-001
-    assumption: "Target market (professional services, government) prefers server-hosted over local-first"
-    validated: "No"
-    impact_if_false: "Rearchitect deployment and collaboration"
+    assumption: "Target market has heterogeneous deployment preferences — a meaningful and growing segment actively prefers local-first tools and file ownership over cloud subscription services, driven by enshittification fatigue (Adobe, Evernote, Notion), data sovereignty concerns, and locked-down client IT environments"
+    validated: "Partially — anecdotal and market signals (Obsidian, iA Writer, Affinity growth); not formally validated with target personas"
+    impact_if_false: "If cloud-first preference dominates, the local-first default is a friction point rather than a differentiator; adjust default to cloud with local as opt-in"
     owner: TBD
     status: Open
     date_added: "2026-02-19"
+    date_updated: "2026-02-22"
+    note: "Supersedes original assumption ('target market prefers server-hosted') which was written against the early enterprise platform vision and is inconsistent with Phase 0 scope and the enshittification-resistance trend."
   - id: A-002
     assumption: "Target users will accept a new authoring tool if export quality is high"
     validated: "No"
@@ -58,3 +61,17 @@ assumptions:
     owner: TBD
     status: Open
     date_added: "2026-02-19"
+  - id: A-009
+    assumption: "The enshittification-resistance trend (preference for owned tools, one-time purchase, local files) is strong enough in the target market to support a perpetual-licence desktop product as the primary revenue model for the core tool"
+    validated: "Partially — Obsidian (~1M users), iA Writer (sustained profitable), Affinity (acquired by Canva but prior growth validates model); not validated for professional services/government specifically"
+    impact_if_false: "Market expects subscription for professional tools; perpetual licence perceived as less trustworthy or unsupported; may need to lead with subscription and offer perpetual as premium option"
+    owner: TBD
+    status: Open
+    date_added: "2026-02-22"
+  - id: A-010
+    assumption: "Users will accept an unbundled AI service subscription (Folivm AI) separate from the core tool purchase, rather than requiring an all-in-one subscription or bring-your-own-key configuration"
+    validated: "No — novel model; closest precedents are Obsidian Sync (optional sync subscription) and Overcast (optional server-side features)"
+    impact_if_false: "If users expect bundled AI: must move to full SaaS. If users prefer BYOK: provide BYOK as escape hatch but maintain managed service as default. Either is architecturally accommodated."
+    owner: TBD
+    status: Open
+    date_added: "2026-02-22"

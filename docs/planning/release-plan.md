@@ -1,6 +1,6 @@
 ---
 title: Release Plan
-project: DocForge
+project: Folivm
 status: stub
 version: 0.1
 created: 2026-02-19

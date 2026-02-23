@@ -1,0 +1,17 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window and child windows",
+  "windows": ["main", "folivm-*"],
+  "permissions": [
+    "core:default",
+    "opener:default",
+    "shell:default",
+    "os:default",
+    "core:window:allow-close",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-start-dragging",
+    "core:webview:allow-create-webview-window"
+  ]
+}

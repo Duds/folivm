@@ -1,17 +1,18 @@
 ---
-name: docforge-drafter
+name: Folivm-drafter
 description: >
-  Draft DocForge project documents. Use when working on any document in the
-  DocForge artefact hierarchy — strategic, conceptual, architectural, planning,
+  Draft Folivm project documents. Use when working on any document in the
+  Folivm artefact hierarchy — strategic, conceptual, architectural, planning,
   execution, governance, or operations. Loads project context from NOTES.md
   and upstream documents, then drafts or extends the target document.
 
 ---
 
-# DocForge Document Drafter
+# Folivm Document Drafter
 
-You are helping develop **DocForge** — an AI-native business document creation
-platform. Your job is to draft or extend a specific project document, grounded
+You are helping develop **Folivm** — an AI-native, ASCII-native document suite.
+Single brand: **Folivm** for company, product, and format (Pandoc extended
+Markdown plus typed cell vocabulary). Use this name consistently. Your job is to draft or extend a specific project document, grounded
 in the established concept and consistent with upstream artefacts.
 
 ---
@@ -20,10 +21,10 @@ in the established concept and consistent with upstream artefacts.
 
 Before writing anything, read the following files in order:
 
-1. `~/Projects/applications/docforge/NOTES.md` — comprehensive concept capture,
+1. `~/Projects/applications/richmark/NOTES.md` — comprehensive concept capture,
    key decisions, open questions, and session history. This is your primary
    context source.
-2. `~/Projects/applications/docforge/README.md` — document index and project
+2. `~/Projects/applications/richmark/README.md` — document index and project
    status overview.
 3. Any upstream documents the target document depends on (see Dependency Map
    below). Read these before drafting.
@@ -53,7 +54,7 @@ the artefact hierarchy:
 
 ### Dependency Map
 
-Read upstream documents before drafting the target. DocForge uses a Phase 0 → Phase 1 → Phase 2 sequencing; problem-statement and solution-concept establish this.
+Read upstream documents before drafting the target. Folivm uses a Phase 0 → Phase 1 → Phase 2 sequencing; problem-statement and solution-concept establish this.
 
 - **options-analysis** → needs: problem-statement, solution-concept
 - **business-case** → needs: problem-statement, solution-concept, options-analysis
@@ -87,7 +88,7 @@ All documents use this YAML frontmatter followed by Markdown content:
 ```yaml
 ---
 title: [Document Title]
-project: DocForge
+project: Folivm
 status: draft
 version: 0.1
 created: [YYYY-MM-DD]
@@ -195,15 +196,19 @@ After drafting, propose any new open questions that should be added to
 
 These are non-negotiable architectural and strategic commitments. Do not contradict them:
 
-- **Backing format is Pandoc Markdown.** Not a custom DOM. Pandoc extended syntax (fenced divs, YAML frontmatter, pandoc-crossref, citeproc) handles semantic richness. DEC-009.
-- **Phase 0 is a personal tool.** Local-first GUI editor; primary user is the author; solve your own problem first. Server-hosted, clause library, brand manifest are Phase 1+. DEC-010.
+- **Single brand: Folivm.** Company, product, and format share one name. Folivm format is Pandoc's extended Markdown plus typed cell vocabulary. DEC-020.
+- **One medium, three rendering modes.** Folivm is not three products. It is one format with document mode (Phase 0), deck mode (Phase 1), and sheet mode (Phase 2). DEC-010, DEC-011.
+- **Backing format is Pandoc Markdown.** Not a custom DOM. Pandoc extended syntax (fenced divs, YAML frontmatter, pandoc-crossref, citeproc) handles semantic richness. DEC-014.
+- **Cell type vocabulary.** Prose, data, formula, visual, frame, media. These are the typed building blocks of a Folivm file. Cell type determines authoring behaviour and rendering in each mode.
+- **Phase 0 is a personal tool.** Local-first GUI editor; document mode only; primary user is the author. Solve your own problem first. Server-hosted, deck mode, sheet mode, clause library, brand manifest are Phase 1+. DEC-015.
+- **The author-client distinction.** The Phase 0 user (technical consultant) builds for clients who need familiar, professional output. The Folivm format is invisible to clients; they receive DOCX or PDF. The product surface must eventually feel as familiar as Word. DEC-013.
 - **Document is data.** Storage format = AI exchange format = rendered document. No lossy conversion. In Phase 0, storage = Pandoc Markdown + YAML frontmatter.
 - **Semantic over cosmetic.** Structure and meaning are stored; appearance is derived. In Phase 0, style = print CSS + reference DOCX template. Full brand manifest is Phase 2.
-- **Deterministic where correctness matters.** Clause library content (Phase 2) is never LLM-generated at insertion time. Assembly is rule-based and auditable. Phase 0 has no clause library.
-- **Export fidelity is a product requirement.** PDF and DOCX export must be professionally acceptable without manual correction. Pandoc is the export engine.
-- **Not replacing Word.** DocForge owns the authoring position; Office owns final-mile distribution. The InDesign model.
+- **Export fidelity gradient.** PDF and DOCX: high fidelity, must be professionally acceptable without post-processing. PPTX: structural fidelity, layout best-effort. XLSX: compatibility artefact, prose context lost. CSV: clean, first-class. DEC-012.
+- **Not replacing Word.** Folivm owns the authoring position; Office owns final-mile distribution. The InDesign model.
 - **The WordPerfect warning.** Technical superiority is necessary but not sufficient. Distribution and adoption strategy matter.
-- **Target market (Phase 2).** Professional services firms, government agencies. Phase 0 targets the technical consultant; enterprise is Phase 2. Australian government context relevant for Phase 2 (ISM, IRAP).
+- **Why Word was never ASCII.** In 1983, machine consumption did not exist as a design pressure. Folivm is built for the moment when machine consumption matters as much as human consumption. This is the founding insight.
+- **Target market (Phase 2).** Professional services firms, government agencies. Phase 0 targets the technical consultant; enterprise is Phase 2. Australian government context relevant for Phase 2 (ISM, IRAP, Privacy Act).
 
 ---
 
@@ -211,7 +216,7 @@ These are non-negotiable architectural and strategic commitments. Do not contrad
 
 Start a new Claude.ai chat for each document. Open with:
 
-> "Use the docforge-drafter skill. I want to draft [document name].
+> "Use the Folivm-drafter skill. I want to draft [document name].
 > The file is at `docs/[layer]/[filename].md`."
 
 Claude will read NOTES.md, README.md, and upstream dependencies, then draft

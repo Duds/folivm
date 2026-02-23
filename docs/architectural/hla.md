@@ -1,6 +1,6 @@
 ---
 title: High-Level Architecture
-project: DocForge
+project: Folivm
 status: draft
 version: 0.3
 created: 2026-02-19
@@ -59,6 +59,21 @@ flowchart TB
 
 ---
 
+## Rendering Modes
+
+Folivm has four rendering modes. Each is a different contract on the same Folivm source — the file does not change, the rendering layer does. Modes are introduced across phases.
+
+| Mode | Phase | Primary surface | Primary cell types | Export |
+|------|-------|-----------------|-------------------|--------|
+| **Document** | 0 | Portrait, paginated, prose-first | Prose, media | PDF, DOCX |
+| **Structural** | 1 | Heading hierarchy, collapsible, reorderable | Headings only (body hidden) | None — authoring surface only |
+| **Deck** | 1 | Landscape, slide-boundary-aware | Prose, visual, frame | PPTX, PDF |
+| **Sheet** | 2 | Tabular-first, literate | Data, formula, prose (annotation) | CSV, XLSX |
+
+Structural mode is an authoring surface, not an export mode — it reads the heading hierarchy of any document and presents it as a reorderable tree. No new data is stored; reordering in structural mode rewrites the heading sequence in the Folivm source. It is the structure-first authoring surface that document and deck modes build on.
+
+---
+
 ## GUI Layer
 
 **Responsibility.** Rich Markdown editing with semantic block support. The user authors in a Word-like interface; the output is valid Pandoc Markdown.
@@ -77,7 +92,7 @@ flowchart TB
 
 **Format.** Plain-text Pandoc Markdown. YAML frontmatter for document metadata (title, author, date, custom fields). Human-readable, diff-able, version-control friendly.
 
-**Project folder schema.** Each project has a standard layout (optionally overridable via `docforge.yaml` in Phase 0):
+**Project folder schema.** Each project has a standard layout (optionally overridable via `Folivm.yaml` in Phase 0):
 
 | Folder | Purpose |
 |--------|---------|
@@ -86,7 +101,7 @@ flowchart TB
 | `context/` | Brief, constraints, project parameters |
 | `deliverables/` | Final documents ready for export |
 
-DocForge-specific format documentation (frontmatter schema, conventions) is a Phase 0 deliverable. The LLM receives selected files from these folders as context when assisting. Full RAG (retrieval over the entire project) is Phase 1; Phase 0 passes context explicitly.
+Folivm-specific format documentation (frontmatter schema, conventions) is a Phase 0 deliverable. The LLM receives selected files from these folders as context when assisting. Full RAG (retrieval over the entire project) is Phase 1; Phase 0 passes context explicitly.
 
 **Does not (Phase 0).** Database, object storage, DMS integration. Files on disk only.
 
@@ -120,7 +135,9 @@ DocForge-specific format documentation (frontmatter schema, conventions) is a Ph
 
 | Component | Phase 0 | Phase 1+ |
 |-----------|---------|----------|
-| RAG over project | No | Yes |
+| Structural (outline) mode | No | Yes — [EP-108](../execution/epics/EP-108-structural-outline-mode.md), prioritise early Phase 1 |
+| RAG over project | No | Yes — [RAG architecture](rag-architecture.md) |
+| Deck mode + PPTX export | No | Yes — [EP-103](../execution/epics/EP-103-deck-mode-pptx-export.md) |
 | Brand manifest | Print CSS + reference DOCX | Full versioned manifest |
 | Clause library | No | Yes |
 | Server-hosted | No (local-only) | Yes |
@@ -147,7 +164,7 @@ DocForge-specific format documentation (frontmatter schema, conventions) is a Ph
 
 ### Specification gaps
 
-- **Format documentation** — DocForge-specific conventions (frontmatter schema, project folder layout) are a Phase 0 deliverable per [principles](principles.md#format-documentation-and-project-conventions). The exact frontmatter schema and `docforge.yaml` format need specification before implementation.
+- **Format documentation** — Folivm-specific conventions (frontmatter schema, project folder layout) are a Phase 0 deliverable per [principles](principles.md#format-documentation-and-project-conventions). The exact frontmatter schema and `Folivm.yaml` format need specification before implementation.
 
 ---
 

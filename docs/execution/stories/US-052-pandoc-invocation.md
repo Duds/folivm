@@ -1,6 +1,6 @@
 ---
 title: US-052 — Pandoc invocation for export
-project: DocForge
+project: Folivm
 status: draft
 version: 0.1
 created: 2026-02-20
@@ -26,4 +26,4 @@ epic: EP-006
 
 ---
 
-*Previous: [US-051](US-051-project-folder-access.md) · Next: [Backlog](../backlog.md)*
+*Previous: [US-051](US-051-project-folder-access.md) · Next: [EP-007](../epics/EP-007-format-documentation.md)*

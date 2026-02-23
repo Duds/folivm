@@ -1,5 +1,5 @@
 ---
-description: Markdown link standards for DocForge document graph
+description: Markdown link standards for Folivm document graph
 alwaysApply: false
 ---
 # Markdown Link Standards
@@ -18,7 +18,7 @@ All internal links use standard Markdown link syntax:
 - Use `../` to navigate up (e.g. from `docs/conceptual/` to `docs/strategic/`).
 - Same-directory: `[ConOps](conops.md)` or `[PRD](prd-lean.md)`.
 
-## DocForge-Specific Examples
+## Folivm-Specific Examples
 
 ### Same directory (e.g. in `docs/conceptual/`)
 ```markdown
@@ -56,5 +56,5 @@ All internal links use standard Markdown link syntax:
 ## Document Graph and Navigation
 
 - Each doc should be reachable via links from README or from other docs in its layer.
-- End documents with navigation: *Previous: [Upstream](path) · Next: [Downstream](path)* (see docforge-drafter).
+- End documents with navigation: *Previous: [Upstream](path) · Next: [Downstream](path)* (see Folivm-drafter).
 - Frontmatter `depends_on` lists upstream documents read for drafting; use it for traceability, not as a substitute for in-body links.

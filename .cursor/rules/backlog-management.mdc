@@ -1,10 +1,10 @@
 ---
-description: DocForge backlog, epics, and stories workflow and artefact hierarchy
+description: Folivm backlog, epics, and stories workflow and artefact hierarchy
 alwaysApply: true
 ---
 # Backlog Management
 
-**DocForge** uses a documentation-led artefact hierarchy. Execution artefacts (backlog, epics, stories) align with strategic and conceptual documents.
+**Folivm** uses a documentation-led artefact hierarchy. Execution artefacts (backlog, epics, stories) align with strategic and conceptual documents.
 
 ## Hierarchy of Truth
 
@@ -38,4 +38,4 @@ When starting an execution task:
 3. Use story acceptance criteria as the basis for verification.
 4. Update status in the story/epic file and in `backlog.md` when complete.
 
-For content standards (outcome-oriented epics, story format, acceptance criteria), follow the docforge-drafter skill: `skills/docforge-drafter/SKILL.md`.
+For content standards (outcome-oriented epics, story format, acceptance criteria), follow the Folivm-drafter skill: `skills/folivm-drafter/SKILL.md`.

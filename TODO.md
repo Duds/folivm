@@ -1,4 +1,4 @@
-# DocForge — TODO
+# Folivm — TODO
 
 Immediate and upcoming tasks. For the full backlog, see [docs/execution/backlog.md](docs/execution/backlog.md).
 
@@ -7,34 +7,56 @@ Immediate and upcoming tasks. For the full backlog, see [docs/execution/backlog.
 ## Immediate (Phase 0 — Personal Tool)
 
 ### Setup and scaffold
-- [ ] Initialise Tauri project (see [ADR-0003](docs/architectural/adrs/ADR-0003-tauri-desktop-framework.md))
-- [ ] Add TipTap to frontend (see [ADR-0004](docs/architectural/adrs/ADR-0004-tiptap-editor-framework.md))
-- [ ] Define project folder schema (inputs/, working/, context/, deliverables/)
+- [x] Initialise Tauri project (see [ADR-0003](docs/architectural/adrs/ADR-0003-tauri-desktop-framework.md))
+- [x] Add TipTap to frontend (see [ADR-0004](docs/architectural/adrs/ADR-0004-tiptap-editor-framework.md))
+- [x] Define project folder schema (inputs/, working/, context/, deliverables/)
 
 ### Editor (EP-001)
-- [ ] Implement basic TipTap editor with headings, lists, paragraphs
-- [ ] Add custom TipTap nodes for Pandoc fenced divs (callout, executive-summary)
-- [ ] Persist as Pandoc Markdown with YAML frontmatter
+- [x] Implement basic TipTap editor with headings, lists, paragraphs
+- [x] Add custom TipTap nodes for Pandoc fenced divs (callout, executive-summary)
+- [x] Persist as Pandoc Markdown with YAML frontmatter
+- [x] Add footnote support (Pandoc inline `^[content]`; insert/edit via bubble menu)
 
 ### Styling (EP-002)
-- [ ] Create base print stylesheet (element-based: h1–h6, p, ul, ol, blockquote, table, etc.)
-- [ ] Add CSS counters for multi-level heading numbering
-- [ ] Implement print preview in editor
+- [x] Create base print stylesheet (element-based: h1–h6, p, ul, ol, blockquote, table, etc.)
+- [x] Add CSS counters for multi-level heading numbering
+- [x] Implement WYSIWYG editor (single view = what you print; no separate preview toggle)
 
 ### Project (EP-003)
-- [ ] Project creation with folder schema
-- [ ] Open project; list documents
-- [ ] Load and save documents to project folder
+- [x] Project creation with folder schema
+- [x] Open project; list documents
+- [x] Load and save documents to project folder
+- [ ] Autosave: implement debounced save when autosave toggle is enabled (toggle UI in window chrome; wire to save flow)
 
 ### Export (EP-004)
-- [ ] Integrate Pandoc CLI for PDF export
-- [ ] Integrate Pandoc CLI for DOCX export
-- [ ] Stylesheet and reference DOCX configuration
+- [x] Integrate Pandoc CLI for PDF export (with path fallback for Homebrew)
+- [x] Integrate Pandoc CLI for DOCX export
+- [x] Reference DOCX template UI (US-032)
+
+### UI scaffold (EP-008)
+- [x] Design token system (tokens.css) — primitives, semantic aliases, component tokens
+- [x] Three-panel layout (sidebar, editor canvas, assistant panel)
+- [x] ThemeProvider and mode switching (Focus, Client Brand A)
+- [x] See [UI Scaffold Prompt](docs/execution/ui-scaffold-prompt.md)
 
 ### LLM (EP-005)
-- [ ] LLM API integration (pluggable provider)
-- [ ] Context loading (document + selected project files)
-- [ ] Suggestion UI with accept/reject
+- [x] LLM API integration (pluggable provider: OpenAI, Anthropic)
+- [x] Context loading (document + selected project files)
+- [x] Suggestion UI with accept/reject/edit
+
+---
+
+### Scaffold adoption (Vellum aesthetics)
+- [x] Phase 1: Path aliases, cn(), lucide-react
+- [x] Phase 2: Radix Dialog and DropdownMenu (replace custom modals/popovers)
+- [x] Phase 3: Extract shell components (TopBar, LeftSidebar, EditorCanvas, RightPanel)
+- [x] Phase 4: Vellum aesthetics (token polish, component refinements)
+- [ ] See [Scaffold Adoption Plan](docs/planning/scaffold-adoption-plan.md)
+
+---
+
+### Documentation (EP-007)
+- [x] Format documentation (frontmatter schema, project conventions, semantic blocks)
 
 ---
 

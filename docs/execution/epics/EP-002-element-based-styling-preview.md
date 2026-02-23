@@ -1,7 +1,7 @@
 ---
 title: EP-002 — Element-Based Styling and Print Preview
-project: DocForge
-status: draft
+project: Folivm
+status: done
 version: 0.1
 created: 2026-02-20
 depends_on:
@@ -38,9 +38,9 @@ The author sees a print preview that approximates final PDF appearance. Styling 
 
 | ID | Title | Status |
 |----|-------|--------|
-| US-010 | As an author, I want to specify a print stylesheet so that preview and export use my styles | Not started |
-| US-011 | As an author, I want to see a print preview that matches my stylesheet so that I know how export will look | Not started |
-| US-012 | As an author, I want hierarchical heading numbering (1, 1.1, 2.2.1) so that my document has numbered sections | Not started |
+| [US-010](../stories/US-010-specify-print-stylesheet.md) | As an author, I want to specify a print stylesheet so that preview and export use my styles | Done |
+| [US-011](../stories/US-011-print-preview.md) | As an author, I want to see a print preview that matches my stylesheet so that I know how export will look | Done (WYSIWYG editor) |
+| [US-012](../stories/US-012-heading-numbering.md) | As an author, I want hierarchical heading numbering (1, 1.1, 2.2.1) so that my document has numbered sections | Done |
 
 ## Related
 

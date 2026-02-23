@@ -1,6 +1,6 @@
 ---
 title: Problem Statement
-project: DocForge
+project: Folivm
 status: draft
 version: 0.3
 created: 2026-02-19
@@ -45,7 +45,7 @@ Documents are not authored in isolation. They are produced within a project: int
 
 ## Enterprise and Government (Secondary)
 
-The same structural problems exist at organisational scale: Word's conflation of appearance with meaning, fragile brand compliance when formatting is applied at the character level. The market gap for a semantic, AI-native document platform is real. But for DocForge, **the primary problem is the consultant's personal workflow**. The enterprise platform vision is Phase 2. Solving the author's own problem first is the right sequencing.
+The same structural problems exist at organisational scale: Word's conflation of appearance with meaning, fragile brand compliance when formatting is applied at the character level. The market gap for a semantic, AI-native document platform is real. But for Folivm, **the primary problem is the consultant's personal workflow**. The enterprise platform vision is Phase 2. Solving the author's own problem first is the right sequencing.
 
 ## Problem Boundaries
 

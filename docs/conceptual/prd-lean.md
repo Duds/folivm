@@ -1,6 +1,6 @@
 ---
 title: Product Requirements Document (Lean)
-project: DocForge
+project: Folivm
 status: draft
 version: 0.3
 created: 2026-02-19
@@ -11,9 +11,9 @@ depends_on:
   - docs/conceptual/conops.md
 ---
 
-# Product Requirements Document (Lean) — Phase 0
+# Product Requirements Document (Lean)
 
-This PRD is scoped to **Phase 0 only**: the personal tool. Phase 1 and Phase 2 requirements are out of scope and will be drafted when those phases are planned.
+This PRD covers Phase 0 (personal tool) and Phase 1 (shareable tool). Phase 2 requirements are out of scope until that phase is planned.
 
 ---
 
@@ -43,7 +43,9 @@ This PRD is scoped to **Phase 0 only**: the personal tool. Phase 1 and Phase 2 r
 
 ## Success Criteria
 
-**The author uses DocForge for their next real client deliverable instead of VS Code + manual pandoc.** That is the Phase 0 success metric. If the author reverts to the old workflow, Phase 0 has not succeeded.
+**Phase 0.** The author uses Folivm for their next real client deliverable instead of VS Code + manual pandoc. If the author reverts to the old workflow, Phase 0 has not succeeded.
+
+**Phase 1.** At least one other user (besides the author) uses Folivm for a real deliverable. Problem validated as shared; others adopt.
 
 ---
 
@@ -97,6 +99,60 @@ Desktop application (Electron or Tauri). Local-first; no server required. Docume
 |----|-------------|
 | FR-5.1 | The application shall run as a desktop application (Electron or Tauri). No server or cloud dependency for core operation. |
 | FR-5.2 | Documents shall be stored as plain-text files in the project folder. No database or proprietary storage. |
+
+---
+
+## Phase 1 Requirements (Shareable Tool)
+
+Phase 1 extends the personal tool with structural mode, deck mode, RAG, templated conventions, and optional sharing. See [Roadmap Phase 1](../planning/roadmap.md) and [Backlog Phase 1+](../execution/backlog.md).
+
+### Structural (Outline) Mode — FR-6.x
+
+The author can work in structural mode: heading hierarchy as collapsible, reorderable tree; body text hidden. Reorder, promote, demote update the underlying document. LLM assistance available (suggest outline, restructure).
+
+| ID | Requirement |
+|----|-------------|
+| FR-6.1 | The system shall provide a structural (outline) mode that displays H1–H4 headings as a collapsible, indented hierarchy with body text hidden. |
+| FR-6.2 | The author shall be able to reorder, promote, and demote headings in structural mode; changes shall update the underlying Folivm source. |
+| FR-6.3 | The author shall be able to switch between document and structural mode; all structural changes shall be preserved. |
+| FR-6.4 | LLM assistance shall be available in structural mode (suggest outline, restructure, add missing sections). |
+
+*Epic: [EP-108](../execution/epics/EP-108-structural-outline-mode.md).*
+
+### Deck Mode and PPTX Export — FR-7.x
+
+The author can switch to deck mode: document rendered as slides; headings define slide boundaries. Export to PPTX (and optionally PDF) for client delivery.
+
+| ID | Requirement |
+|----|-------------|
+| FR-7.1 | The system shall provide a deck mode that renders the document as a slide deck; headings shall define slide boundaries. |
+| FR-7.2 | The system shall export the current document to PPTX using Pandoc (or fallback per ADR). |
+| FR-7.3 | The author may specify an optional reference PPTX template for styling. |
+
+*Epic: [EP-103](../execution/epics/EP-103-deck-mode-pptx-export.md).*
+
+### RAG over Project Folder — FR-8.x
+
+The LLM shall receive retrieved context from the project folder automatically, in addition to or instead of explicitly selected files.
+
+| ID | Requirement |
+|----|-------------|
+| FR-8.1 | The system shall index project folder contents (inputs/, working/, context/) for retrieval. |
+| FR-8.2 | Each LLM request shall automatically include relevant retrieved chunks from the project folder. |
+| FR-8.3 | The author shall be able to configure exclusions (folders or files) from RAG indexing. |
+
+*Epic: [EP-102](../execution/epics/EP-102-rag-project-folder.md).*
+
+### Templated Project Conventions — FR-9.x
+
+The author can create a project from a template that sets folder structure and optional default files.
+
+| ID | Requirement |
+|----|-------------|
+| FR-9.1 | The system shall provide workflow templates (e.g. consulting report, legal matter, government submission) when creating a project. |
+| FR-9.2 | A template shall apply the correct folder structure and optional default context files. |
+
+*Epic: [EP-107](../execution/epics/EP-107-templated-project-conventions.md).*
 
 ---
 
