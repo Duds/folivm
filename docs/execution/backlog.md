@@ -159,6 +159,7 @@ Epics are in [epics/](epics/). Stories (PBIs) are in [stories/](stories/).
 
 - [PRD Lean](../conceptual/prd-lean.md) — Phase 0 requirements
 - [FRS](../architectural/frs.md) — Functional requirements specification; FR-ID traceability
+- [SAD](../architecture/sad.md) — Software Architecture Document; component and module structure
 - [Roadmap](../planning/roadmap.md) — Phase sequencing and success criteria
 - [UI Scaffold Prompt](ui-scaffold-prompt.md) — Interface shell specification (EP-008)
 - [Solution Concept](../strategic/solution-concept.md) — Phase 0 architecture

@@ -57,6 +57,7 @@ Immediate and upcoming tasks. For the full backlog, see [docs/execution/backlog.
 
 ### Documentation (EP-007)
 - [x] Format documentation (frontmatter schema, project conventions, semantic blocks)
+- [x] Software Architecture Document (SAD) at [docs/architecture/sad.md](docs/architecture/sad.md)
 
 ---
 

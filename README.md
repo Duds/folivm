@@ -6,7 +6,17 @@ An AI-native, ASCII-native document suite. One medium — Folivm — with three 
 
 ## Project Status
 
-🟡 **Phase 0 (PoC)** — Tauri desktop app scaffold; TipTap editor; project folder context; PDF/DOCX export. Format documentation drafted.
+🟡 **Phase 0 (Personal Tool)** — Core capabilities implemented and ready for author validation. Tauri 2 desktop app with three-panel layout; TipTap rich editor (headings, lists, tables, fenced divs, footnotes); project folder schema; PDF/DOCX export via Pandoc; LLM assistance with project context; search, drag-and-drop, native menu, autosave. **Backlog:** Document tabs (EP-111), AI assistant as extension (EP-112).
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Desktop | Tauri 2 |
+| Frontend | React 19, Vite 7, TypeScript 5.8 |
+| Editor | TipTap (ProseMirror) |
+| UI | Radix UI, design tokens (`tokens.css`) |
+| Export | Pandoc CLI (PDF, DOCX) |
 
 ## Quick Navigation
 
@@ -19,14 +29,15 @@ An AI-native, ASCII-native document suite. One medium — Folivm — with three 
 | Benefits Map | [docs/strategic/benefits-map.md](docs/strategic/benefits-map.md) | ⚪ Stub |
 | ConOps | [docs/conceptual/conops.md](docs/conceptual/conops.md) | 🔴 Draft |
 | PRD (Lean) | [docs/conceptual/prd-lean.md](docs/conceptual/prd-lean.md) | 🔴 Draft |
-| Principles | [docs/architectural/principles.md](docs/architectural/principles.md) | ⚪ Stub |
-| HLA | [docs/architectural/hla.md](docs/architectural/hla.md) | ⚪ Stub |
+| Principles | [docs/architectural/principles.md](docs/architectural/principles.md) | 🔴 Draft |
+| HLA | [docs/architectural/hla.md](docs/architectural/hla.md) | 🔴 Draft |
+| SAD | [docs/architecture/sad.md](docs/architecture/sad.md) | 🔴 Draft |
 | FRS | [docs/architectural/frs.md](docs/architectural/frs.md) | 🔴 Draft |
 | NFRs | [docs/architectural/nfrs.md](docs/architectural/nfrs.md) | 🔴 Draft |
 | Security & Data | [docs/architectural/security-data.md](docs/architectural/security-data.md) | 🔴 Draft |
 | ADRs | [docs/architectural/adrs/](docs/architectural/adrs/) | 🔴 Draft |
-| Operating Model | [docs/planning/operating-model.md](docs/planning/operating-model.md) | ⚪ Stub |
-| Roadmap | [docs/planning/roadmap.md](docs/planning/roadmap.md) | ⚪ Stub |
+| Operating Model | [docs/planning/operating-model.md](docs/planning/operating-model.md) | 🔴 Draft |
+| Roadmap | [docs/planning/roadmap.md](docs/planning/roadmap.md) | 🔴 Draft |
 | Release Plan | [docs/planning/release-plan.md](docs/planning/release-plan.md) | ⚪ Stub |
 | Backlog | [docs/execution/backlog.md](docs/execution/backlog.md) | 🔴 Draft |
 | Format Spec | [docs/format/README.md](docs/format/README.md) | 🔴 Draft |
@@ -50,9 +61,10 @@ Folivm addresses a gap that did not exist five years ago: the absence of a docum
 
 ## Quick Start
 
-- **Run the app:** `npm install && npm run tauri dev` (requires [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/) and [Pandoc](https://pandoc.org/))
+- **Run the app:** `npm install && npm run tauri dev`  
+  Requires [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/) and [Pandoc](https://pandoc.org/) for export.
 - **[TODO](TODO.md)** — Immediate tasks and Phase 0 checklist
-- **[Backlog](docs/execution/backlog.md)** — Epics and stories
+- **[Backlog](docs/execution/backlog.md)** — Epics and stories (Phase 0 mostly complete)
 - **[Format Spec](docs/format/README.md)** — Document format, frontmatter, project conventions
 
 ## Related Projects

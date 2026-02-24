@@ -168,4 +168,4 @@ Folivm-specific format documentation (frontmatter schema, conventions) is a Phas
 
 ---
 
-*Previous: [Architectural Principles](principles.md) · Next: [ADRs](adrs/) · See also: [FRS](frs.md), [NFRs](nfrs.md)*
+*Previous: [Architectural Principles](principles.md) · Next: [SAD](../architecture/sad.md) · See also: [FRS](frs.md), [NFRs](nfrs.md), [ADRs](adrs/)*

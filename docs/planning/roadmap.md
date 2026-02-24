@@ -34,7 +34,7 @@ Folivm is sequenced into four phases. Each phase has explicit success criteria a
 
 **Success criteria.** The author uses Folivm for their next real client deliverable instead of VS Code + manual pandoc.
 
-**Phase 0 progress (2026-02-24).** Core capabilities implemented: Tauri shell (EP-006), project folder (EP-003), rich editor with WYSIWYG (EP-001, EP-002), PDF/DOCX export with Pandoc path fallback (EP-004), format documentation (EP-007), UI scaffold (EP-008), LLM assistance (EP-005), search/find-replace (US-091) with project results and file links, explorer drag-and-drop (US-090), native application menu (EP-109), empty editor canvas (EP-110), autosave, reference DOCX, preview mode zoom. **Backlog:** Document tabs (EP-111), AI assistant as extension (EP-112). Ready for author validation workflow.
+**Phase 0 progress (2026-02-25).** Core capabilities implemented: Tauri shell (EP-006), project folder (EP-003), rich editor with WYSIWYG (EP-001, EP-002), PDF/DOCX export with Pandoc path fallback (EP-004), format documentation (EP-007), UI scaffold (EP-008), LLM assistance (EP-005), search/find-replace (US-091) with project results and file links, explorer drag-and-drop (US-090), native application menu (EP-109), empty editor canvas (EP-110), autosave, reference DOCX, preview mode zoom. Architecture: SAD (Software Architecture Document) added at [docs/architecture/sad.md](../architecture/sad.md). **Backlog:** Document tabs (EP-111), AI assistant as extension (EP-112). Ready for author validation workflow.
 
 **Exit conditions (before Phase 1).**
 - Author has delivered at least one real client document using Folivm
