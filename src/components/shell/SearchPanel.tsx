@@ -56,6 +56,7 @@ export function SearchPanel({
 
   return (
     <div className="search-panel">
+      <h2 className="search-panel-title">Search</h2>
       <div className="search-panel-section">
         <div className="form-group search-form-row">
           <Label htmlFor="search-query" className="sr-only">
@@ -128,7 +129,7 @@ export function SearchPanel({
               type="text"
               value={replaceQuery}
               onChange={(e) => onReplaceQueryChange(e.target.value)}
-              placeholder="Replace with"
+              placeholder="Replace"
               className="search-input"
               aria-label="Replace with"
             />

@@ -1,7 +1,11 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
+import { openUrl } from "@tauri-apps/plugin-opener";
 import type { ProjectInfo, ProjectConfig, SearchMatch } from "@/types";
 import { parseDocument, serializeDocument, validateFrontmatter } from "@/frontmatter";
+
+const DOCUMENTATION_URL = "https://github.com/dalerogers/folivm";
+const SUPPORT_URL = "https://github.com/dalerogers/folivm/issues";
 
 const FOLDERS = ["inputs", "working", "context", "deliverables"] as const;
 
@@ -45,6 +49,8 @@ export function useFolivmApp() {
     model: "gpt-4o-mini",
   });
   const [showReferenceDocxModal, setShowReferenceDocxModal] = useState(false);
+  const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] =
+    useState(false);
   const [referenceDocxPath, setReferenceDocxPath] = useState<string | null>(
     null
   );
@@ -80,6 +86,7 @@ export function useFolivmApp() {
   const [currentDocumentMatchIndex, setCurrentDocumentMatchIndex] = useState(0);
   const assistantPromptRef = useRef<HTMLTextAreaElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const lastSavedContentRef = useRef<string | null>(null);
 
   const groupedDocs = useMemo(
     () => (project ? groupDocumentsByFolder(project.documents) : null),
@@ -153,6 +160,29 @@ export function useFolivmApp() {
   }, [project?.path]);
 
   useEffect(() => {
+    if (!autosaveEnabled || !project || !currentDoc) return;
+    if (docContent === lastSavedContentRef.current) return;
+
+    const timeout = setTimeout(() => {
+      const validation = validateFrontmatter(docContent);
+      if (!validation.valid) return;
+      invoke("write_document", {
+        projectPath: project.path,
+        relativePath: currentDoc,
+        content: docContent,
+      })
+        .then(() => {
+          lastSavedContentRef.current = docContent;
+          setStatus("Saved");
+          setTimeout(() => setStatus(""), 2000);
+        })
+        .catch((e) => showError(String(e)));
+    }, 1500);
+
+    return () => clearTimeout(timeout);
+  }, [autosaveEnabled, project, currentDoc, docContent, showError]);
+
+  useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === ".") {
         e.preventDefault();
@@ -184,6 +214,7 @@ export function useFolivmApp() {
       setProject(info);
       setCurrentDoc(null);
       setDocContent("");
+      lastSavedContentRef.current = null;
       setStatus(`Project created at ${path}`);
       setTimeout(() => setStatus(""), 3000);
     } catch (e) {
@@ -206,6 +237,7 @@ export function useFolivmApp() {
       setProject(info);
       setCurrentDoc(null);
       setDocContent("");
+      lastSavedContentRef.current = null;
       setStatus(`Opened project: ${path}`);
       setTimeout(() => setStatus(""), 3000);
     } catch (e) {
@@ -240,6 +272,7 @@ export function useFolivmApp() {
         });
         setDocContent(content);
         setCurrentDoc(relativePath);
+        lastSavedContentRef.current = content;
         setStatus("");
       } catch (e) {
         showError(String(e));
@@ -284,9 +317,9 @@ export function useFolivmApp() {
       const results = await invoke<SearchMatch[]>("search_project", {
         projectPath: project.path,
         query: searchQuery,
-        include_glob: "*.md",
-        exclude_glob: ".git",
-        case_sensitive: searchCaseSensitive,
+        includeGlob: "*.md",
+        excludeGlob: ".git",
+        caseSensitive: searchCaseSensitive,
       });
       setProjectSearchResults(results);
     } catch (e) {
@@ -426,6 +459,7 @@ created: ${new Date().toISOString().slice(0, 10)}
           relativePath: currentDoc,
           content,
         });
+        lastSavedContentRef.current = content;
         setStatus("Saved");
         setTimeout(() => setStatus(""), 2000);
       } catch (e) {
@@ -578,6 +612,26 @@ created: ${new Date().toISOString().slice(0, 10)}
     setLlmSuggestion(null);
   }, []);
 
+  const openKeyboardShortcutsModal = useCallback(() => {
+    setShowKeyboardShortcutsModal(true);
+  }, []);
+
+  const openDocumentation = useCallback(async () => {
+    try {
+      await openUrl(DOCUMENTATION_URL);
+    } catch (e) {
+      showError(`Failed to open documentation: ${e}`);
+    }
+  }, [showError]);
+
+  const openSupport = useCallback(async () => {
+    try {
+      await openUrl(SUPPORT_URL);
+    } catch (e) {
+      showError(`Failed to open support: ${e}`);
+    }
+  }, [showError]);
+
   const openReferenceDocxModal = useCallback(async () => {
     if (!project) return;
     try {
@@ -710,6 +764,11 @@ created: ${new Date().toISOString().slice(0, 10)}
     chooseReferenceDocx,
     clearReferenceDocx,
     setShowReferenceDocxModal,
+    showKeyboardShortcutsModal,
+    setShowKeyboardShortcutsModal,
+    openKeyboardShortcutsModal,
+    openDocumentation,
+    openSupport,
     setShowLlmConfig,
     wordCount,
   };

@@ -4,7 +4,7 @@ project: Folivm
 status: draft
 version: 0.5
 created: 2026-02-19
-updated: 2026-02-23
+updated: 2026-02-25
 depends_on:
   - docs/conceptual/prd-lean.md
   - docs/planning/operating-model.md
@@ -34,7 +34,7 @@ Folivm is sequenced into four phases. Each phase has explicit success criteria a
 
 **Success criteria.** The author uses Folivm for their next real client deliverable instead of VS Code + manual pandoc.
 
-**Phase 0 progress (2026-02-23).** Core capabilities implemented: Tauri shell (EP-006), project folder (EP-003), rich editor with WYSIWYG (EP-001, EP-002), PDF/DOCX export with Pandoc path fallback (EP-004), format documentation (EP-007), UI scaffold (EP-008), LLM assistance (EP-005), search/find-replace (US-091), explorer drag-and-drop (US-090), native application menu (EP-109) — Folivm/File/Edit/View/Window menus implemented; Help menu has dummy Keyboard Shortcuts and missing Documentation/Support links. See [EP-109 implementation status](../execution/epics/EP-109-native-application-menu.md#native-menu-implementation-status). **Backlog:** Help menu completion (US-096), empty editor canvas (EP-110), document tabs (EP-111), AI assistant as extension (EP-112). Ready for author validation workflow.
+**Phase 0 progress (2026-02-24).** Core capabilities implemented: Tauri shell (EP-006), project folder (EP-003), rich editor with WYSIWYG (EP-001, EP-002), PDF/DOCX export with Pandoc path fallback (EP-004), format documentation (EP-007), UI scaffold (EP-008), LLM assistance (EP-005), search/find-replace (US-091) with project results and file links, explorer drag-and-drop (US-090), native application menu (EP-109), empty editor canvas (EP-110), autosave, reference DOCX, preview mode zoom. **Backlog:** Document tabs (EP-111), AI assistant as extension (EP-112). Ready for author validation workflow.
 
 **Exit conditions (before Phase 1).**
 - Author has delivered at least one real client document using Folivm
@@ -43,8 +43,8 @@ Folivm is sequenced into four phases. Each phase has explicit success criteria a
 - Decision made: proceed to Phase 1 or iterate on Phase 0
 
 **Phase 0 backlog (UX polish, sequencing TBD).**
-- **EP-109** Native application menu — *in progress*: Folivm/File/Edit/View/Window implemented; Help menu needs proper Keyboard Shortcuts reference panel + Documentation and Support links (US-096). Close tab blocked on EP-111.
-- **EP-110** Empty editor canvas — no page chrome when no doc open; Folivm watermark and keyboard shortcut list
+- **EP-109** Native application menu — Done. Help menu: Keyboard Shortcuts modal, Documentation and Support links. Close tab blocked on EP-111.
+- **EP-110** Empty editor canvas — Done. Folivm watermark and keyboard shortcut list when no doc open.
 - **EP-111** Document tabs — open multiple documents in tabs
 - **EP-112** AI assistant as extension — refactor LLM panel to optional extension; addresses thin cloud vs API tokens (users who don't want API keys get lean core)
 
