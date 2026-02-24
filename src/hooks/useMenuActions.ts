@@ -9,7 +9,9 @@ export interface MenuActionHandlers {
   createProject: () => void;
   openProject: () => void;
   createDocument: () => void;
+  openDocument: () => void;
   saveDocument: () => void;
+  closeTab: () => void;
   exportPdf: () => void;
   exportDocx: () => void;
   toggleLeftSidebar: () => void;
@@ -20,6 +22,7 @@ export interface MenuActionHandlers {
   openKeyboardShortcuts: () => void;
   openDocumentation: () => void;
   openSupport: () => void;
+  toggleNonPrintingChars: () => void;
 }
 
 interface MenuActionPayload {
@@ -40,8 +43,14 @@ export function useMenuActions(handlers: MenuActionHandlers): void {
         case "new-document":
           handlers.createDocument();
           break;
+        case "open-document":
+          handlers.openDocument();
+          break;
         case "save":
           handlers.saveDocument();
+          break;
+        case "close-tab":
+          handlers.closeTab();
           break;
         case "export-pdf":
           handlers.exportPdf();
@@ -63,6 +72,9 @@ export function useMenuActions(handlers: MenuActionHandlers): void {
           break;
         case "view-outline":
           handlers.setViewMode("outline");
+          break;
+        case "toggle-non-printing-chars":
+          handlers.toggleNonPrintingChars();
           break;
         case "zoom-in":
           handlers.setZoomLevel((prev) => Math.min(prev + 10, 200));

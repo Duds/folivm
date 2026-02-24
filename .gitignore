@@ -1,5 +1,6 @@
 # Virtual environment (used for RAIDD generator)
 .venv/
+.venv-scripts/
 
 # Dependencies and build
 node_modules/

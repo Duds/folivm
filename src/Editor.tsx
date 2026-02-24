@@ -11,6 +11,7 @@ import { TableCell } from "@tiptap/extension-table-cell";
 import { TableHeader } from "@tiptap/extension-table-header";
 import { CalloutExtension, ExecutiveSummaryExtension } from "./extensions/CalloutExtension";
 import { FootnoteExtension } from "./extensions/FootnoteExtension";
+import { InvisiblesExtension } from "./extensions/InvisiblesExtension";
 import TurndownService from "turndown";
 import { markdownToHtml } from "./markdown";
 
@@ -53,25 +54,72 @@ function htmlToMarkdown(html: string): string {
   return td.turndown(html || "<p></p>");
 }
 
+interface EditorCommandsRef {
+  focusAtHeading: (index: number) => void;
+  toggleHeading: (level: 1 | 2 | 3 | 4) => void;
+  setParagraph: () => void;
+  toggleCallout: () => void;
+  toggleExecutiveSummary: () => void;
+  toggleBold: () => void;
+  toggleItalic: () => void;
+  toggleCode: () => void;
+  toggleLink: (url?: string) => void;
+  getActiveMarks: () => { bold: boolean; italic: boolean; code: boolean };
+}
+
 interface EditorProps {
   content: string;
   onChange: (content: string) => void;
   onSave: () => void;
+  showNonPrintingChars?: boolean;
+  onSelectionChange?: (
+    nodeId: string | null,
+    hasCharacterRange: boolean
+  ) => void;
+  editorCommandsRef?: React.RefObject<EditorCommandsRef | null>;
 }
 
-export function Editor({ content, onChange, onSave }: EditorProps) {
+// Editor type from TipTap/ProseMirror - use minimal shape for selection mapping
+function computeSelectionNodeId(editor: { state: { doc: { descendants: (fn: (node: { type: { name: string }; nodeSize: number }, pos: number) => void) => void }; selection: { $from: { pos: number } } } }): string | null {
+  const headings: { pos: number; size: number }[] = [];
+  editor.state.doc.descendants((node, pos) => {
+    if (node.type.name === "heading") {
+      headings.push({ pos, size: node.nodeSize });
+    }
+  });
+  const selPos = editor.state.selection.$from.pos;
+  for (let i = headings.length - 1; i >= 0; i--) {
+    const { pos, size } = headings[i];
+    if (pos <= selPos && selPos < pos + size) {
+      return `h-${i}`;
+    }
+  }
+  return "document";
+}
+
+export function Editor({
+  content,
+  onChange,
+  onSave,
+  showNonPrintingChars = false,
+  onSelectionChange,
+  editorCommandsRef,
+}: EditorProps) {
   const isInternalUpdate = useRef(false);
+  const selectionChangeFromStructureTreeRef = useRef(false);
   const [footnoteOpen, setFootnoteOpen] = useState(false);
   const [footnoteDraft, setFootnoteDraft] = useState("");
   const footnoteIsUpdateRef = useRef(false);
 
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      CalloutExtension,
-      ExecutiveSummaryExtension,
-      FootnoteExtension,
-      Placeholder.configure({ placeholder: "Start writing..." }),
+  const editor = useEditor(
+    {
+      extensions: [
+        StarterKit,
+        CalloutExtension,
+        ExecutiveSummaryExtension,
+        FootnoteExtension,
+        InvisiblesExtension.configure({ show: showNonPrintingChars }),
+        Placeholder.configure({ placeholder: "Start writing..." }),
       Table.configure({
         resizable: true,
         HTMLAttributes: { class: "Folivm-table" },
@@ -97,7 +145,19 @@ export function Editor({ content, onChange, onSave }: EditorProps) {
       const md = htmlToMarkdown(editor.getHTML());
       onChange(md);
     },
-  });
+    onSelectionUpdate: ({ editor }) => {
+      if (selectionChangeFromStructureTreeRef.current) {
+        selectionChangeFromStructureTreeRef.current = false;
+        return;
+      }
+      const nodeId = computeSelectionNodeId(editor);
+      const { from, to } = editor.state.selection;
+      const hasCharacterRange = from !== to;
+      onSelectionChange?.(nodeId, hasCharacterRange);
+    },
+  },
+  [showNonPrintingChars, onSelectionChange]
+);
 
   useEffect(() => {
     if (!editor || isInternalUpdate.current) {
@@ -111,6 +171,41 @@ export function Editor({ content, onChange, onSave }: EditorProps) {
   useEffect(() => {
     return () => editor?.destroy();
   }, [editor]);
+
+  useEffect(() => {
+    if (!editor || !editorCommandsRef) return;
+    const focusAtHeading = (index: number) => {
+      const headings: { pos: number }[] = [];
+      editor.state.doc.descendants((node, pos) => {
+        if (node.type.name === "heading") headings.push({ pos });
+      });
+      const h = headings[index];
+      if (!h) return;
+      selectionChangeFromStructureTreeRef.current = true;
+      editor.commands.setTextSelection(h.pos);
+      editor.commands.focus();
+    };
+    (editorCommandsRef as React.MutableRefObject<EditorCommandsRef | null>).current = {
+      focusAtHeading,
+      toggleHeading: (level) => editor.chain().focus().toggleHeading({ level }).run(),
+      setParagraph: () => editor.chain().focus().setParagraph().run(),
+      toggleCallout: () => editor.chain().focus().toggleCallout().run(),
+      toggleExecutiveSummary: () => editor.chain().focus().toggleExecutiveSummary().run(),
+      toggleBold: () => editor.chain().focus().toggleBold().run(),
+      toggleItalic: () => editor.chain().focus().toggleItalic().run(),
+      toggleCode: () => editor.chain().focus().toggleCode().run(),
+      toggleLink: (url) =>
+        editor.chain().focus().toggleLink({ href: url ?? "" }).run(),
+      getActiveMarks: () => ({
+        bold: editor.isActive("bold"),
+        italic: editor.isActive("italic"),
+        code: editor.isActive("code"),
+      }),
+    };
+    return () => {
+      (editorCommandsRef as React.MutableRefObject<EditorCommandsRef | null>).current = null;
+    };
+  }, [editor, editorCommandsRef]);
 
   if (!editor) return <div className="editor-loading">Loading editor...</div>;
 

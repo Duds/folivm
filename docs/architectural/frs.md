@@ -42,8 +42,9 @@ This document formalises the functional requirements for Folivm Phase 0 and Phas
 | FR-2.1 | The editor shall support Pandoc fenced divs for at least callout and executive summary (or equivalent semantic blocks). | Must | Insert blocks; round-trip to Markdown; re-open preserves structure |
 | FR-2.2 | The editor shall support headings (H1–H4), lists, tables, and footnotes as per Pandoc extended Markdown. | Must | Insert each element; export to PDF/DOCX; verify output |
 | FR-2.3 | The editor shall provide a print preview that approximates the final PDF appearance. | Must | Compare preview to exported PDF; structural match |
+| FR-2.4 | The editor shall provide a style picker in the right panel for paragraph-level and character-level styles; the style picker shall be primary over the context menu for style application. | Must | Apply paragraph and character styles via right panel; context menu secondary |
 
-*Source.* [PRD § Authoring](../conceptual/prd-lean.md#authoring)
+*Source.* [PRD § Authoring](../conceptual/prd-lean.md#authoring). *Epic.* [EP-122](../execution/epics/EP-122-right-panel-style-picker.md).
 
 ---
 
@@ -135,7 +136,7 @@ This document formalises the functional requirements for Folivm Phase 0 and Phas
 | FR | Epic(s) |
 |----|---------|
 | FR-1.x | EP-003 Project folder context, EP-006 Tauri desktop shell |
-| FR-2.x | EP-001 Rich Markdown editor, EP-002 Element-based styling & preview |
+| FR-2.x | EP-001 Rich Markdown editor, EP-002 Element-based styling & preview, EP-122 Right panel style picker |
 | FR-3.x | EP-004 Export PDF and DOCX |
 | FR-4.x | EP-005 LLM assistance |
 | FR-5.x | EP-006 Tauri desktop shell |
@@ -153,4 +154,4 @@ This document formalises the functional requirements for Folivm Phase 0 and Phas
 
 ---
 
-*Previous: [PRD (Lean)](../conceptual/prd-lean.md) · Next: [Backlog](../execution/backlog.md) · See also: [NFRs](nfrs.md) · [HLA](hla.md)*
+*Previous: [PRD (Lean)](../conceptual/prd-lean.md) · Next: [Backlog](../execution/backlog.md) · See also: [NFRs](nfrs.md) · [HLA](hla.md) · [Nomenclature](../format/nomenclature.md)*

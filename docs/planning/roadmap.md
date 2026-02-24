@@ -45,8 +45,12 @@ Folivm is sequenced into four phases. Each phase has explicit success criteria a
 **Phase 0 backlog (UX polish, sequencing TBD).**
 - **EP-109** Native application menu — Done. Help menu: Keyboard Shortcuts modal, Documentation and Support links. Close tab blocked on EP-111.
 - **EP-110** Empty editor canvas — Done. Folivm watermark and keyboard shortcut list when no doc open.
-- **EP-111** Document tabs — open multiple documents in tabs
+- **EP-111** Document tabs — Done
+- **EP-113** Right panel structure and properties — Done
+- **EP-114** Document layout ruler — Done
+- **EP-115** Radix Themes adoption — Done (application chrome; transparent corners, settings icon)
 - **EP-112** AI assistant as extension — refactor LLM panel to optional extension; addresses thin cloud vs API tokens (users who don't want API keys get lean core)
+- **EP-122** Right panel style picker — paragraph-level and character-level styles; primary over context menu; two-way selection sync
 
 ---
 

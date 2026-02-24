@@ -7,12 +7,17 @@ import {
 } from "@/components/ui/Dialog";
 
 const SHORTCUTS: { keys: string; action: string }[] = [
+  { keys: "⌘N", action: "New document" },
+  { keys: "⌘⇧P", action: "New project" },
+  { keys: "⌘O", action: "Open project" },
+  { keys: "⌘⇧O", action: "Open document" },
   { keys: "⌘⇧N", action: "New Window" },
   { keys: "⌘S", action: "Save" },
   { keys: "⌘⇧F", action: "Find in project" },
   { keys: "⌘.", action: "Focus AI assistant" },
   { keys: "⌘=", action: "Zoom In" },
   { keys: "⌘-", action: "Zoom Out" },
+  { keys: "⌘⇧8", action: "Show non-printing characters" },
 ];
 
 interface KeyboardShortcutsModalProps {

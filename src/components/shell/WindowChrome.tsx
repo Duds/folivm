@@ -13,9 +13,10 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuCheckboxItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
 } from "@/components/ui/DropdownMenu";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/Tooltip";
 import { Switch } from "@/components/ui/Switch";
@@ -33,12 +34,10 @@ interface WindowChromeProps {
   onRightDrawerToggle?: () => void;
   autosaveEnabled?: boolean;
   onAutosaveChange?: (enabled: boolean) => void;
-  /** Settings dropdown: theme options */
-  mode?: "default" | "focus";
-  brand?: "default" | "client-a";
-  onModeChange?: (mode: "default" | "focus") => void;
-  onBrandChange?: (brand: "default" | "client-a") => void;
   onOpenReferenceDocxModal?: () => void;
+  /** Ruler units (EP-114) */
+  rulerUnits?: "mm" | "cm" | "inch";
+  onRulerUnitsChange?: (units: "mm" | "cm" | "inch") => void;
 }
 
 /**
@@ -55,11 +54,9 @@ export function WindowChrome({
   onRightDrawerToggle,
   autosaveEnabled = false,
   onAutosaveChange,
-  mode = "default",
-  brand = "default",
-  onModeChange,
-  onBrandChange,
   onOpenReferenceDocxModal,
+  rulerUnits = "mm",
+  onRulerUnitsChange,
 }: WindowChromeProps) {
   const [isTauri, setIsTauri] = useState(false);
   const [platformName, setPlatformName] = useState<string | null>(null);
@@ -192,7 +189,7 @@ export function WindowChrome({
                   htmlFor="chrome-autosave"
                   className="window-chrome-autosave-label"
                 >
-                  Auto
+                  Auto save
                 </Label>
               </div>
             </TooltipTrigger>
@@ -218,9 +215,9 @@ export function WindowChrome({
                 aria-label={leftDrawerOpen ? "Close left panel" : "Open left panel"}
               >
                 {leftDrawerOpen ? (
-                  <PanelLeftClose size={16} />
+                  <PanelLeftClose size={14} strokeWidth={2} />
                 ) : (
-                  <PanelLeftOpen size={16} />
+                  <PanelLeftOpen size={14} strokeWidth={2} />
                 )}
               </button>
             </TooltipTrigger>
@@ -239,51 +236,57 @@ export function WindowChrome({
                 }
               >
                 {rightDrawerOpen ? (
-                  <PanelRightClose size={16} />
+                  <PanelRightClose size={14} strokeWidth={2} />
                 ) : (
-                  <PanelRightOpen size={16} />
+                  <PanelRightOpen size={14} strokeWidth={2} />
                 )}
               </button>
             </TooltipTrigger>
             <TooltipContent>Toggle right panel</TooltipContent>
           </Tooltip>
         )}
-        {onModeChange && onBrandChange && onOpenReferenceDocxModal && (
+        {(onRulerUnitsChange || onOpenReferenceDocxModal) && (
           <Tooltip>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <TooltipTrigger asChild>
+              <TooltipTrigger asChild>
+                <DropdownMenuTrigger asChild>
                   <button
                     type="button"
                     className="window-chrome-btn window-chrome-btn--app"
                     aria-label="Settings"
                   >
-                    <Settings size={16} />
+                    <Settings size={14} strokeWidth={2} />
                   </button>
-                </TooltipTrigger>
-              </DropdownMenuTrigger>
+                </DropdownMenuTrigger>
+              </TooltipTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Theme</DropdownMenuLabel>
-                <DropdownMenuCheckboxItem
-                  checked={mode === "focus"}
-                  onCheckedChange={(checked) =>
-                    onModeChange(checked ? "focus" : "default")
-                  }
-                >
-                  Focus mode
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={brand === "client-a"}
-                  onCheckedChange={(checked) =>
-                    onBrandChange(checked ? "client-a" : "default")
-                  }
-                >
-                  Client Brand A
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={onOpenReferenceDocxModal}>
-                  Reference DOCX
-                </DropdownMenuItem>
+                {onRulerUnitsChange && (
+                  <>
+                    <DropdownMenuLabel>Ruler units</DropdownMenuLabel>
+                    <DropdownMenuRadioGroup
+                      value={rulerUnits}
+                      onValueChange={(v) =>
+                        onRulerUnitsChange(v as "mm" | "cm" | "inch")
+                      }
+                    >
+                      <DropdownMenuRadioItem value="mm">
+                        Millimetres (mm)
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="cm">
+                        Centimetres (cm)
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="inch">
+                        Inches (in)
+                      </DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
+                {onOpenReferenceDocxModal && (
+                  <DropdownMenuItem onClick={onOpenReferenceDocxModal}>
+                    Reference DOCX
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
             <TooltipContent>Settings</TooltipContent>

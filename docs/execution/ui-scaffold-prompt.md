@@ -28,6 +28,8 @@ Cursor prompt for building the Folivm interface scaffold. The implementation mod
 > A Figma designer working from this system should be able to map every token directly to its code equivalent. A developer changing a value should know exactly which Figma layer they are working at.
 
 > **Scope note.** The token system here controls the *application chrome only* — sidebar, topbar, panels, buttons, and the document editor surface within the app shell. It is entirely separate from the document-level brand variable system described in [Principle 10](../architectural/principles.md#10-brand-manifest-uses-a-variables--modes-architecture), which governs the print stylesheet and export appearance and is a Phase 2 concern (EP-201). Think of it this way: these tokens style the Figma frame; the Phase 2 brand manifest styles the document that lives inside the frame.
+>
+> **Update (EP-115):** Application chrome styling has been migrated to Radix Themes. This prompt describes the prior token architecture; document tokens (e.g. `--color-block-*`) remain.
 
 ---
 
@@ -87,9 +89,10 @@ These are the raw values. No component or semantic token ever uses a primitive d
   --primitive-red-500: #DC2626;
 
   /* — Typography primitives — */
-  --primitive-font-ui:   'Inter', system-ui, -apple-system, sans-serif;
+  /* UI: macOS → -apple-system/SF Pro; Windows → Segoe UI; cross-platform → system-ui */
+  --primitive-font-ui:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Helvetica, Arial, sans-serif;
   --primitive-font-body: Georgia, 'Times New Roman', serif;
-  --primitive-font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --primitive-font-mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Consolas, Monaco, monospace;
 
   --primitive-size-xs:   11px;
   --primitive-size-sm:   13px;

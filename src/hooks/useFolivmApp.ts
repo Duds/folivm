@@ -31,10 +31,18 @@ function wordCount(text: string): number {
   return text.split(/\s+/).filter(Boolean).length;
 }
 
+export interface TabState {
+  id: string;
+  path: string;
+  content: string;
+  lastSavedContent: string;
+}
+
 export function useFolivmApp() {
   const [project, setProject] = useState<ProjectInfo | null>(null);
-  const [currentDoc, setCurrentDoc] = useState<string | null>(null);
-  const [docContent, setDocContent] = useState("");
+  const [openTabs, setOpenTabs] = useState<TabState[]>([]);
+  const [activeTabId, setActiveTabId] = useState<string | null>(null);
+  const [pendingCloseTabId, setPendingCloseTabId] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
   const [showNewDocModal, setShowNewDocModal] = useState(false);
@@ -57,6 +65,12 @@ export function useFolivmApp() {
   const [leftSidebarCollapsed, setLeftSidebarCollapsed] = useState(false);
   const [leftSidebarWidth, setLeftSidebarWidth] = useState(240);
   const [rightSidebarCollapsed, setRightSidebarCollapsed] = useState(false);
+  const [rightSidebarWidth, setRightSidebarWidth] = useState(320);
+  const [selectedStructureNode, setSelectedStructureNode] = useState<
+    string | null
+  >("document");
+  const [selectionHasCharacterRange, setSelectionHasCharacterRange] =
+    useState(false);
   const [autosaveEnabled, setAutosaveEnabled] = useState(false);
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(
     new Set()
@@ -84,9 +98,81 @@ export function useFolivmApp() {
   >([]);
   const [projectSearchLoading, setProjectSearchLoading] = useState(false);
   const [currentDocumentMatchIndex, setCurrentDocumentMatchIndex] = useState(0);
+  const [showNonPrintingChars, setShowNonPrintingChars] = useState(() => {
+    try {
+      const v = localStorage.getItem("folivm.showNonPrintingChars");
+      return v === "true";
+    } catch {
+      return false;
+    }
+  });
   const assistantPromptRef = useRef<HTMLTextAreaElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const lastSavedContentRef = useRef<string | null>(null);
+  const editorCommandsRef = useRef<{
+    focusAtHeading: (index: number) => void;
+    toggleHeading: (level: 1 | 2 | 3 | 4) => void;
+    setParagraph: () => void;
+    toggleCallout: () => void;
+    toggleExecutiveSummary: () => void;
+    toggleBold: () => void;
+    toggleItalic: () => void;
+    toggleCode: () => void;
+    toggleLink: (url?: string) => void;
+    getActiveMarks: () => { bold: boolean; italic: boolean; code: boolean };
+  } | null>(null);
+
+  const [rulerUnits, setRulerUnits] = useState<"mm" | "cm" | "inch">(() => {
+    try {
+      const v = localStorage.getItem("folivm.rulerUnits") as "mm" | "cm" | "inch" | null;
+      return v === "mm" || v === "cm" || v === "inch" ? v : "mm";
+    } catch {
+      return "mm";
+    }
+  });
+
+  const setRulerUnitsHandler = useCallback((units: "mm" | "cm" | "inch") => {
+    setRulerUnits(units);
+    try {
+      localStorage.setItem("folivm.rulerUnits", units);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const toggleShowNonPrintingChars = useCallback(() => {
+    setShowNonPrintingChars((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("folivm.showNonPrintingChars", String(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  }, []);
+
+  const activeTab = useMemo(
+    () => openTabs.find((t) => t.id === activeTabId) ?? null,
+    [openTabs, activeTabId]
+  );
+
+  const currentDoc = activeTab?.path ?? null;
+  const docContent = activeTab?.content ?? "";
+
+  const setDocContent = useCallback(
+    (content: string | ((prev: string) => string)) => {
+      setOpenTabs((prev) => {
+        if (!activeTabId) return prev;
+        const updater = typeof content === "function" ? content : () => content;
+        return prev.map((t) =>
+          t.id === activeTabId
+            ? { ...t, content: updater(t.content) }
+            : t
+        );
+      });
+    },
+    [activeTabId]
+  );
 
   const groupedDocs = useMemo(
     () => (project ? groupDocumentsByFolder(project.documents) : null),
@@ -160,8 +246,8 @@ export function useFolivmApp() {
   }, [project?.path]);
 
   useEffect(() => {
-    if (!autosaveEnabled || !project || !currentDoc) return;
-    if (docContent === lastSavedContentRef.current) return;
+    if (!autosaveEnabled || !project || !currentDoc || !activeTab) return;
+    if (docContent === activeTab.lastSavedContent) return;
 
     const timeout = setTimeout(() => {
       const validation = validateFrontmatter(docContent);
@@ -172,7 +258,13 @@ export function useFolivmApp() {
         content: docContent,
       })
         .then(() => {
-          lastSavedContentRef.current = docContent;
+          setOpenTabs((prev) =>
+            prev.map((t) =>
+              t.id === activeTabId
+                ? { ...t, lastSavedContent: docContent }
+                : t
+            )
+          );
           setStatus("Saved");
           setTimeout(() => setStatus(""), 2000);
         })
@@ -180,7 +272,7 @@ export function useFolivmApp() {
     }, 1500);
 
     return () => clearTimeout(timeout);
-  }, [autosaveEnabled, project, currentDoc, docContent, showError]);
+  }, [autosaveEnabled, project, currentDoc, docContent, activeTab, activeTabId, showError]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -212,9 +304,8 @@ export function useFolivmApp() {
         projectPath: path,
       });
       setProject(info);
-      setCurrentDoc(null);
-      setDocContent("");
-      lastSavedContentRef.current = null;
+      setOpenTabs([]);
+      setActiveTabId(null);
       setStatus(`Project created at ${path}`);
       setTimeout(() => setStatus(""), 3000);
     } catch (e) {
@@ -235,9 +326,8 @@ export function useFolivmApp() {
         projectPath: path,
       });
       setProject(info);
-      setCurrentDoc(null);
-      setDocContent("");
-      lastSavedContentRef.current = null;
+      setOpenTabs([]);
+      setActiveTabId(null);
       setStatus(`Opened project: ${path}`);
       setTimeout(() => setStatus(""), 3000);
     } catch (e) {
@@ -261,25 +351,122 @@ export function useFolivmApp() {
   }, [project, showError]);
 
   const loadDocument = useCallback(
-    async (relativePath: string) => {
+    async (relativePath: string, openInNewTab = false) => {
       if (!project) return;
       setError("");
+      const existingTab = openTabs.find((t) => t.path === relativePath);
+      if (!openInNewTab && existingTab) {
+        setActiveTabId(existingTab.id);
+        setStatus("");
+        return;
+      }
       setStatus("Loading...");
       try {
         const content = await invoke<string>("read_document", {
           projectPath: project.path,
           relativePath,
         });
-        setDocContent(content);
-        setCurrentDoc(relativePath);
-        lastSavedContentRef.current = content;
+        const id = `tab-${relativePath}-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        const newTab: TabState = {
+          id,
+          path: relativePath,
+          content,
+          lastSavedContent: content,
+        };
+        setOpenTabs((prev) => [...prev, newTab]);
+        setActiveTabId(id);
         setStatus("");
       } catch (e) {
         showError(String(e));
       }
     },
-    [project, showError]
+    [project, openTabs, showError]
   );
+
+  const switchTab = useCallback((id: string) => {
+    setActiveTabId(id);
+  }, []);
+
+  const performCloseTab = useCallback((id: string) => {
+    setOpenTabs((prev) => {
+      const next = prev.filter((t) => t.id !== id);
+      setActiveTabId((current) => {
+        if (current !== id) return current;
+        const idx = prev.findIndex((t) => t.id === id);
+        const nextIdx = idx < next.length ? idx : Math.max(0, next.length - 1);
+        return next[nextIdx]?.id ?? null;
+      });
+      return next;
+    });
+    setPendingCloseTabId(null);
+  }, []);
+
+  const closeTab = useCallback(
+    (id: string, _e?: React.MouseEvent) => {
+      const tab = openTabs.find((t) => t.id === id);
+      if (!tab) return;
+      if (tab.content !== tab.lastSavedContent) {
+        setPendingCloseTabId(id);
+      } else {
+        performCloseTab(id);
+      }
+    },
+    [openTabs, performCloseTab]
+  );
+
+  const handleCloseTabChoice = useCallback(
+    async (choice: "save" | "dont-save" | "cancel") => {
+      if (!pendingCloseTabId || !project) return;
+      const tab = openTabs.find((t) => t.id === pendingCloseTabId);
+      if (!tab) {
+        setPendingCloseTabId(null);
+        return;
+      }
+      if (choice === "cancel") {
+        setPendingCloseTabId(null);
+        return;
+      }
+      if (choice === "save") {
+        const validation = validateFrontmatter(tab.content);
+        if (!validation.valid) {
+          showError(validation.error ?? "Invalid frontmatter");
+          return;
+        }
+        try {
+          await invoke("write_document", {
+            projectPath: project.path,
+            relativePath: tab.path,
+            content: tab.content,
+          });
+          setOpenTabs((prev) =>
+            prev.map((t) =>
+              t.id === pendingCloseTabId
+                ? { ...t, lastSavedContent: tab.content }
+                : t
+            )
+          );
+        } catch (e) {
+          showError(String(e));
+          return;
+        }
+      }
+      performCloseTab(pendingCloseTabId);
+    },
+    [pendingCloseTabId, openTabs, project, performCloseTab, showError]
+  );
+
+  const closeActiveTab = useCallback(() => {
+    if (activeTabId) closeTab(activeTabId);
+  }, [activeTabId, closeTab]);
+
+  const duplicateTab = useCallback((id: string) => {
+    const tab = openTabs.find((t) => t.id === id);
+    if (!tab) return;
+    const newId = `tab-${tab.path}-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const newTab: TabState = { ...tab, id: newId };
+    setOpenTabs((prev) => [...prev, newTab]);
+    setActiveTabId(newId);
+  }, [openTabs]);
 
   const moveDocument = useCallback(
     async (fromRelativePath: string, toFolder: string) => {
@@ -297,16 +484,18 @@ export function useFolivmApp() {
         });
         setProject({ path: info.path, documents: [...info.documents] });
         setExpandedFolders((prev) => new Set([...prev, toFolder]));
-        if (currentDoc === fromRelativePath) {
-          await loadDocument(newPath);
-        }
+        setOpenTabs((prev) =>
+          prev.map((t) =>
+            t.path === fromRelativePath ? { ...t, path: newPath } : t
+          )
+        );
         setStatus("Moved");
         setTimeout(() => setStatus(""), 2000);
       } catch (e) {
         showError(String(e));
       }
     },
-    [project, currentDoc, loadDocument, showError]
+    [project, showError]
   );
 
   const runProjectSearch = useCallback(async () => {
@@ -459,14 +648,18 @@ created: ${new Date().toISOString().slice(0, 10)}
           relativePath: currentDoc,
           content,
         });
-        lastSavedContentRef.current = content;
+        setOpenTabs((prev) =>
+          prev.map((t) =>
+            t.id === activeTabId ? { ...t, lastSavedContent: content } : t
+          )
+        );
         setStatus("Saved");
         setTimeout(() => setStatus(""), 2000);
       } catch (e) {
         showError(String(e));
       }
     },
-    [project, currentDoc, showError]
+    [project, currentDoc, activeTabId, showError]
   );
 
   const exportPdf = useCallback(async () => {
@@ -685,11 +878,34 @@ created: ${new Date().toISOString().slice(0, 10)}
     }
   }, [project, showError]);
 
+  const tabInfos = useMemo(
+    () =>
+      openTabs.map((t) => ({
+        id: t.id,
+        path: t.path,
+        unsaved: t.content !== t.lastSavedContent,
+      })),
+    [openTabs]
+  );
+
+  const pendingCloseTab = pendingCloseTabId
+    ? openTabs.find((t) => t.id === pendingCloseTabId)
+    : null;
+
   return {
     project,
     currentDoc,
     docContent,
     setDocContent,
+    openTabs: tabInfos,
+    activeTabId,
+    switchTab,
+    closeTab,
+    closeActiveTab,
+    handleCloseTabChoice,
+    duplicateTab,
+    showCloseTabModal: !!pendingCloseTabId,
+    pendingCloseTabFileName: pendingCloseTab?.path.split("/").pop() ?? "",
     groupedDocs,
     error,
     status,
@@ -713,6 +929,16 @@ created: ${new Date().toISOString().slice(0, 10)}
     setLeftSidebarWidth,
     rightSidebarCollapsed,
     setRightSidebarCollapsed,
+    rightSidebarWidth,
+    setRightSidebarWidth,
+    selectedStructureNode,
+    setSelectedStructureNode,
+    selectionHasCharacterRange,
+    handleSelectionChange: useCallback((nodeId: string | null, hasCharRange: boolean) => {
+      setSelectedStructureNode(nodeId);
+      setSelectionHasCharacterRange(hasCharRange);
+    }, []),
+    editorCommandsRef,
     searchQuery,
     setSearchQuery,
     replaceQuery,
@@ -740,6 +966,10 @@ created: ${new Date().toISOString().slice(0, 10)}
     setViewMode,
     zoomLevel,
     setZoomLevel,
+    showNonPrintingChars,
+    toggleShowNonPrintingChars,
+    rulerUnits,
+    setRulerUnits: setRulerUnitsHandler,
     exportStatus,
     assistantPromptRef,
     toggleContextFile,

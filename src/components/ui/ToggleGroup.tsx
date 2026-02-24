@@ -1,6 +1,7 @@
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
 import { cn } from "@/lib/utils";
 
+/** ToggleGroup — keep primitive; style with Themes tokens in Phase 3 */
 export function ToggleGroup(
   props: React.ComponentProps<typeof ToggleGroupPrimitive.Root>
 ) {

@@ -167,7 +167,9 @@ App
 
 ---
 
-## Phase 4 — Vellum aesthetics
+## Phase 4 — Vellum aesthetics (superseded by EP-115)
+
+Radix Themes adoption ([EP-115](../execution/epics/EP-115-radix-themes-adoption.md)) supersedes Phase 4. Application chrome now uses Radix Themes components and tokens.
 
 ### 4.1 Token audit and additions
 
@@ -226,13 +228,14 @@ App
 
 ## Phase 5 — Design panel adaptation (deferred)
 
-**Scope:** EP-002 element-based styling; wire scaffold's `DocumentStyleProvider` and `useDocumentStyles` to TipTap.
+**Scope:** EP-002 element-based styling; EP-122 right panel style picker. Wire scaffold's `DocumentStyleProvider` and `useDocumentStyles` to TipTap.
 
 **Actions (when prioritised):**
 - Map TipTap node types to scaffold block types (heading-1, body, callout, etc.).
 - Integrate block selection from TipTap with `useDocumentStyles` context.
-- Right panel: add Design tab; show styling controls when a block is selected.
+- Right panel: add style picker; show paragraph-level and character-level controls when a block or text range is selected.
 - Token option registry: align with existing `tokens.css`; use for font, size, weight, colour pickers.
+- See [EP-122](../execution/epics/EP-122-right-panel-style-picker.md) and [Nomenclature](../format/nomenclature.md) for style picker vs variable picker terminology.
 
 **Deferral rationale:** Phase 0 success criteria focus on workflow validation; design panel is enhancement. Implement after Phases 1–4 and author validation.
 

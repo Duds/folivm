@@ -50,14 +50,21 @@ Immediate and upcoming tasks. For the full backlog, see [docs/execution/backlog.
 - [x] Phase 1: Path aliases, cn(), lucide-react
 - [x] Phase 2: Radix Dialog and DropdownMenu (replace custom modals/popovers)
 - [x] Phase 3: Extract shell components (TopBar, LeftSidebar, EditorCanvas, RightPanel)
-- [x] Phase 4: Vellum aesthetics (token polish, component refinements)
-- [ ] See [Scaffold Adoption Plan](docs/planning/scaffold-adoption-plan.md)
+- [x] Phase 4: Vellum aesthetics (token polish, component refinements) — superseded by EP-115
+- [x] EP-115: Adopt Radix Themes for application chrome
 
 ---
 
 ### Documentation (EP-007)
 - [x] Format documentation (frontmatter schema, project conventions, semantic blocks)
 - [x] Software Architecture Document (SAD) at [docs/architecture/sad.md](docs/architecture/sad.md)
+
+### Right panel style picker (EP-122)
+- [ ] Two-way selection sync (editor ↔ structure tree ↔ properties panel)
+- [ ] Paragraph-level style picker (heading, body, block type)
+- [ ] Character-level style picker (emphasis, strong, code, link)
+- [ ] VariablePicker persistence for paragraph styles
+- [x] Nomenclature doc and cross-doc alignment (see [docs/format/nomenclature.md](docs/format/nomenclature.md))
 
 ---
 

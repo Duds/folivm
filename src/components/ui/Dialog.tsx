@@ -1,39 +1,20 @@
-import * as DialogPrimitive from "@radix-ui/react-dialog";
+import * as DialogThemes from "@radix-ui/themes";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export function Dialog(props: DialogPrimitive.DialogProps) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />;
+export function Dialog(props: DialogThemes.Dialog.RootProps) {
+  return <DialogThemes.Dialog.Root data-slot="dialog" {...props} />;
 }
 
-export function DialogTrigger(
-  props: DialogPrimitive.DialogTriggerProps
-) {
-  return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
+export function DialogTrigger(props: DialogThemes.Dialog.TriggerProps) {
+  return <DialogThemes.Dialog.Trigger data-slot="dialog-trigger" {...props} />;
 }
 
-export function DialogPortal(props: DialogPrimitive.DialogPortalProps) {
-  return <DialogPrimitive.Portal {...props} />;
+export function DialogClose(props: DialogThemes.Dialog.CloseProps) {
+  return <DialogThemes.Dialog.Close {...props} />;
 }
 
-export function DialogClose(props: DialogPrimitive.DialogCloseProps) {
-  return <DialogPrimitive.Close {...props} />;
-}
-
-export function DialogOverlay({
-  className,
-  ...props
-}: DialogPrimitive.DialogOverlayProps) {
-  return (
-    <DialogPrimitive.Overlay
-      data-slot="dialog-overlay"
-      className={cn("radix-dialog-overlay", className)}
-      {...props}
-    />
-  );
-}
-
-interface DialogContentProps extends DialogPrimitive.DialogContentProps {
+interface DialogContentProps extends DialogThemes.Dialog.ContentProps {
   showCloseButton?: boolean;
 }
 
@@ -44,50 +25,63 @@ export function DialogContent({
   ...props
 }: DialogContentProps) {
   return (
-    <DialogPortal>
-      <DialogOverlay />
-      <DialogPrimitive.Content
-        data-slot="dialog-content"
-        className={cn("radix-dialog-content", className)}
-        {...props}
-      >
-        {children}
-        {showCloseButton && (
-          <DialogPrimitive.Close
-            className="radix-dialog-close"
-            aria-label="Close"
-          >
-            <X size={16} />
-          </DialogPrimitive.Close>
-        )}
-      </DialogPrimitive.Content>
-    </DialogPortal>
+    <DialogThemes.Dialog.Content
+      data-slot="dialog-content"
+      className={cn(className)}
+      {...props}
+    >
+      {children}
+      {showCloseButton && (
+        <DialogThemes.Dialog.Close
+          aria-label="Close"
+          style={{ position: "absolute", top: "var(--space-3)", right: "var(--space-3)" }}
+        >
+          <X size={16} />
+        </DialogThemes.Dialog.Close>
+      )}
+    </DialogThemes.Dialog.Content>
   );
 }
 
-export function DialogHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("radix-dialog-header", className)} {...props} />;
-}
-
-export function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("radix-dialog-footer", className)} {...props} />;
-}
-
-export function DialogTitle(props: DialogPrimitive.DialogTitleProps) {
+export function DialogHeader({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <DialogPrimitive.Title
-      data-slot="dialog-title"
-      className="radix-dialog-title"
+    <DialogThemes.Flex
+      direction="column"
+      gap="2"
+      className={cn(className)}
       {...props}
     />
   );
 }
 
-export function DialogDescription(props: DialogPrimitive.DialogDescriptionProps) {
+export function DialogFooter({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <DialogPrimitive.Description
+    <DialogThemes.Flex
+      justify="end"
+      gap="2"
+      mt="4"
+      className={cn(className)}
+      {...props}
+    />
+  );
+}
+
+export function DialogTitle(props: DialogThemes.Dialog.TitleProps) {
+  return (
+    <DialogThemes.Dialog.Title data-slot="dialog-title" {...props} />
+  );
+}
+
+export function DialogDescription(props: DialogThemes.Dialog.DescriptionProps) {
+  return (
+    <DialogThemes.Dialog.Description
       data-slot="dialog-description"
-      className="radix-dialog-description"
       {...props}
     />
   );

@@ -24,7 +24,7 @@ Implementation is defined by the [UI Scaffold Prompt](../ui-scaffold-prompt.md),
 
 - Part 1: Design token system (`tokens.css`) — Layer 1 primitives, Layer 2 semantic aliases, Layer 3 component tokens; Figma mapping
 - Part 2: Application layout — top bar, left sidebar (collapsible), centre editor canvas, right assistant panel
-- Part 3: ThemeProvider and mode switching — `data-mode`, `data-brand`, Focus mode, Client Brand A
+- Part 3: ThemeProvider and mode switching — ~~`data-mode`, `data-brand`, Focus mode, Client Brand A~~ (superseded by EP-115 Radix Themes adoption)
 - Part 4: Constraints — Tailwind layout only; no raw hex; preserve Tauri/editor logic
 
 ## Scope
@@ -42,7 +42,7 @@ Implementation is defined by the [UI Scaffold Prompt](../ui-scaffold-prompt.md),
 
 - All styling resolves through token chain (component → semantic → primitive)
 - Three-panel layout with collapsible sidebars
-- Theme modes (Focus, Client Brand A) re-resolve tokens without component CSS changes
+- Theme modes (Focus, Client Brand A) — retired; application chrome now uses Radix Themes (EP-115)
 - Tauri invoke calls and editor logic preserved
 
 ## Related

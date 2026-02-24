@@ -15,30 +15,17 @@ interface AppShellProps {
   onLeftSidebarWidthChange: (width: number) => void;
   rightSidebarCollapsed: boolean;
   onRightSidebarCollapsedChange: (v: boolean) => void;
+  rightSidebarWidth: number;
+  onRightSidebarWidthChange: (width: number) => void;
   expandedFolders: Set<string>;
   onExpandedFoldersChange: (folders: Set<string>) => void;
-  contextFiles: string[];
-  selectedContextPaths: Set<string>;
-  onToggleContextFile: (path: string) => void;
-  showLlmConfig: boolean;
-  llmConfigForm: {
-    provider: string;
-    api_key: string;
-    model: string;
-  };
-  onLlmConfigFormChange: (
-    updater: (prev: AppShellProps["llmConfigForm"]) => AppShellProps["llmConfigForm"]
-  ) => void;
-  llmSuggestion: string | null;
-  llmPrompt: string;
-  onLlmPromptChange: (value: string) => void;
-  llmLoading: boolean;
   viewMode: "document" | "preview" | "outline";
   zoomLevel: number;
+  showNonPrintingChars: boolean;
+  rulerUnits: "mm" | "cm" | "inch";
   status: string;
   exportStatus: string | null;
   error: string;
-  assistantPromptRef: React.RefObject<HTMLTextAreaElement | null>;
   onLoadDocument: (path: string) => void;
   onCreateDocument: () => void;
   onRefreshExplorer: () => void;
@@ -64,16 +51,29 @@ interface AppShellProps {
   searchInputRef: React.RefObject<HTMLInputElement | null>;
   onSaveDocument: (content: string) => void;
   onExportPdf: () => void;
-  onRequestLlm: () => void;
-  onAcceptLlmSuggestion: () => void;
-  onUpdateLlmSuggestion: (text: string) => void;
-  onRejectLlmSuggestion: () => void;
-  onOpenLlmConfig: () => void;
-  onSaveLlmConfig: () => void;
-  onCloseLlmConfig: () => void;
   onViewModeChange: (mode: "document" | "preview" | "outline") => void;
   onZoomChange: (zoom: number) => void;
   wordCount: (text: string) => number;
+  openTabs?: { id: string; path: string; unsaved: boolean }[];
+  activeTabId?: string | null;
+  onSwitchTab?: (id: string) => void;
+  onCloseTab?: (id: string, e: React.MouseEvent) => void;
+  selectedStructureNode?: string | null;
+  onSelectStructureNode?: (nodeId: string | null) => void;
+  onSelectionChange?: (nodeId: string | null, hasCharacterRange: boolean) => void;
+  selectionHasCharacterRange?: boolean;
+  editorCommandsRef?: React.RefObject<{
+    focusAtHeading: (index: number) => void;
+    toggleHeading: (level: 1 | 2 | 3 | 4) => void;
+    setParagraph: () => void;
+    toggleCallout: () => void;
+    toggleExecutiveSummary: () => void;
+    toggleBold: () => void;
+    toggleItalic: () => void;
+    toggleCode: () => void;
+    toggleLink: (url?: string) => void;
+    getActiveMarks: () => { bold: boolean; italic: boolean; code: boolean };
+  } | null>;
 }
 
 export function AppShell(props: AppShellProps) {
@@ -87,25 +87,17 @@ export function AppShell(props: AppShellProps) {
     leftSidebarWidth,
     onLeftSidebarWidthChange,
     rightSidebarCollapsed,
-    onRightSidebarCollapsedChange,
+    rightSidebarWidth,
+    onRightSidebarWidthChange,
     expandedFolders,
     onExpandedFoldersChange,
-    contextFiles,
-    selectedContextPaths,
-    onToggleContextFile,
-    showLlmConfig,
-    llmConfigForm,
-    onLlmConfigFormChange,
-    llmSuggestion,
-    llmPrompt,
-    onLlmPromptChange,
-    llmLoading,
     viewMode,
     zoomLevel,
+    showNonPrintingChars,
+    rulerUnits,
     status,
     exportStatus,
     error,
-    assistantPromptRef,
     onLoadDocument,
     onCreateDocument,
     onRefreshExplorer,
@@ -131,21 +123,19 @@ export function AppShell(props: AppShellProps) {
     searchInputRef,
     onSaveDocument,
     onExportPdf,
-    onRequestLlm,
-    onAcceptLlmSuggestion,
-    onUpdateLlmSuggestion,
-    onRejectLlmSuggestion,
-    onOpenLlmConfig,
-    onSaveLlmConfig,
-    onCloseLlmConfig,
     onViewModeChange,
     onZoomChange,
     wordCount,
+    openTabs = [],
+    activeTabId = null,
+    onSwitchTab,
+    onCloseTab,
+    selectedStructureNode = "document",
+    onSelectStructureNode = () => {},
+    onSelectionChange,
+    selectionHasCharacterRange = false,
+    editorCommandsRef,
   } = props;
-
-  const contextChip = currentDoc
-    ? `context/brief.md · ${currentDoc}`
-    : "context/brief.md · this document";
 
   const handleSave = () => onSaveDocument(docContent);
 
@@ -155,6 +145,7 @@ export function AppShell(props: AppShellProps) {
       style={
         {
           "--left-sidebar-width": `${leftSidebarWidth}px`,
+          "--right-sidebar-width": `${rightSidebarWidth}px`,
         } as React.CSSProperties
       }
     >
@@ -225,32 +216,56 @@ export function AppShell(props: AppShellProps) {
         docContent={docContent}
         onDocContentChange={onDocContentChange}
         onSave={handleSave}
+        tabs={openTabs}
+        activeTabId={activeTabId}
+        onSwitchTab={onSwitchTab}
+        onCloseTab={onCloseTab}
         viewMode={viewMode}
         zoomLevel={zoomLevel}
+        showNonPrintingChars={showNonPrintingChars}
+        rulerUnits={rulerUnits}
+        onSelectionChange={onSelectionChange}
+        editorCommandsRef={editorCommandsRef}
       />
+      {!rightSidebarCollapsed && (
+      <div
+        className="resize-handle resize-handle-right"
+        aria-hidden
+        onMouseDown={(e) => {
+          e.preventDefault();
+          const startX = e.clientX;
+          const startW = rightSidebarWidth;
+          const minW = 200;
+          const maxW = 560;
+
+          const onMove = (move: MouseEvent) => {
+            const dx = startX - move.clientX; /* Right panel: drag right = increase width */
+            const next = Math.max(minW, Math.min(maxW, startW + dx));
+            onRightSidebarWidthChange(next);
+          };
+          const onUp = () => {
+            document.removeEventListener("mousemove", onMove);
+            document.removeEventListener("mouseup", onUp);
+            document.body.style.cursor = "";
+            document.body.style.userSelect = "";
+          };
+
+          document.addEventListener("mousemove", onMove);
+          document.addEventListener("mouseup", onUp);
+          document.body.style.cursor = "col-resize";
+          document.body.style.userSelect = "none";
+        }}
+      />
+      )}
       <RightPanel
         collapsed={rightSidebarCollapsed}
-        onToggleCollapse={() => onRightSidebarCollapsedChange(!rightSidebarCollapsed)}
-        contextChip={contextChip}
-        contextFiles={contextFiles}
-        selectedContextPaths={selectedContextPaths}
-        onToggleContextFile={onToggleContextFile}
-        showLlmConfig={showLlmConfig}
-        llmConfigForm={llmConfigForm}
-        onLlmConfigFormChange={onLlmConfigFormChange}
-        onSaveLlmConfig={onSaveLlmConfig}
-        onCloseLlmConfig={onCloseLlmConfig}
-        llmSuggestion={llmSuggestion}
-        onUpdateLlmSuggestion={onUpdateLlmSuggestion}
-        onAcceptLlmSuggestion={onAcceptLlmSuggestion}
-        onRejectLlmSuggestion={onRejectLlmSuggestion}
-        llmPrompt={llmPrompt}
-        onLlmPromptChange={onLlmPromptChange}
-        llmLoading={llmLoading}
-        onRequestLlm={onRequestLlm}
-        onOpenLlmConfig={onOpenLlmConfig}
         currentDoc={currentDoc}
-        assistantPromptRef={assistantPromptRef}
+        docContent={docContent}
+        onDocContentChange={onDocContentChange}
+        selectedStructureNode={selectedStructureNode}
+        onSelectNode={onSelectStructureNode}
+        selectionHasCharacterRange={selectionHasCharacterRange}
+        editorCommandsRef={editorCommandsRef}
       />
       <BottomToolbar
         viewMode={viewMode}
@@ -262,7 +277,7 @@ export function AppShell(props: AppShellProps) {
         pageCount={Math.ceil(wordCount(docContent) / 250) || 0}
         saveStatus={status}
         exportStatus={exportStatus}
-        llmStatus={llmLoading ? "AI thinking…" : null}
+        llmStatus={null}
         onPrintPreview={() => onViewModeChange("preview")}
         onExportPdf={onExportPdf}
         hasProject={!!project}

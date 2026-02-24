@@ -157,11 +157,11 @@ decisions:
     status: Accepted
     note: "Djot (designed by Pandoc's author John MacFarlane) is worth monitoring as a potential future prose substrate — cleaner extension model, designed for programmatic use. Too immature and LLM-unfamiliar for current use but worth revisiting if Folivm's Pandoc Markdown substrate proves limiting."
   - id: DEC-019
-    decision: "Application chrome uses Figma-first design token system (primitives → semantic aliases → component tokens); document-level brand manifest (EP-201) is separate"
-    rationale: "Figma mapping (primitives, styles, variables, component variants) aligns design and code; token chain enables mode switching (Focus, Client Brand A) without component CSS changes. Application chrome tokens are distinct from document-level brand variables (Phase 2)."
+    decision: "Application chrome uses Radix Themes; document-level brand manifest (EP-201) is separate"
+    rationale: "Application chrome uses Radix Themes for typography, spacing, radius, colour. Custom token chain (Focus, Client Brand A) retired. Document-level brand variables (Phase 2) remain distinct."
     alternatives_considered: "Ad-hoc component styling; Tailwind colour/spacing classes throughout; single shared token layer"
     impact: "Medium — interface implementation, design handoff, Phase 2 brand manifest alignment"
-    decision_maker: "UI scaffold prompt 2026-02-23"
-    date_made: "2026-02-23"
+    decision_maker: "UI scaffold prompt 2026-02-23; EP-115 2026-02-25"
+    date_made: "2026-02-25"
     status: Accepted
-    note: "Specification: docs/execution/ui-scaffold-prompt.md (EP-008)"
+    note: "EP-115 Radix Themes adoption; document tokens retained for ProseMirror"

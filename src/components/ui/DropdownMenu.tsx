@@ -1,53 +1,44 @@
-import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import * as DropdownMenuThemes from "@radix-ui/themes";
 import { cn } from "@/lib/utils";
 
-export function DropdownMenu(props: DropdownMenuPrimitive.DropdownMenuProps) {
+export function DropdownMenu(props: DropdownMenuThemes.DropdownMenu.RootProps) {
   return (
-    <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />
+    <DropdownMenuThemes.DropdownMenu.Root data-slot="dropdown-menu" {...props} />
   );
 }
 
 export function DropdownMenuTrigger(
-  props: DropdownMenuPrimitive.DropdownMenuTriggerProps
+  props: DropdownMenuThemes.DropdownMenu.TriggerProps
 ) {
-  return <DropdownMenuPrimitive.Trigger {...props} />;
+  return <DropdownMenuThemes.DropdownMenu.Trigger {...props} />;
 }
 
 export function DropdownMenuContent({
   className,
-  sideOffset = 4,
   ...props
-}: DropdownMenuPrimitive.DropdownMenuContentProps) {
+}: DropdownMenuThemes.DropdownMenu.ContentProps) {
   return (
-    <DropdownMenuPrimitive.Portal>
-      <DropdownMenuPrimitive.Content
-        data-slot="dropdown-menu-content"
-        sideOffset={sideOffset}
-        className={cn("radix-dropdown-content", className)}
-        {...props}
-      />
-    </DropdownMenuPrimitive.Portal>
-  );
-}
-
-export function DropdownMenuLabel(
-  props: DropdownMenuPrimitive.DropdownMenuLabelProps
-) {
-  return (
-    <DropdownMenuPrimitive.Label
-      className="radix-dropdown-label"
+    <DropdownMenuThemes.DropdownMenu.Content
+      data-slot="dropdown-menu-content"
+      className={cn(className)}
       {...props}
     />
   );
 }
 
+export function DropdownMenuLabel(
+  props: DropdownMenuThemes.DropdownMenu.LabelProps
+) {
+  return <DropdownMenuThemes.DropdownMenu.Label {...props} />;
+}
+
 export function DropdownMenuItem({
   className,
   ...props
-}: DropdownMenuPrimitive.DropdownMenuItemProps) {
+}: DropdownMenuThemes.DropdownMenu.ItemProps) {
   return (
-    <DropdownMenuPrimitive.Item
-      className={cn("radix-dropdown-item", className)}
+    <DropdownMenuThemes.DropdownMenu.Item
+      className={cn(className)}
       {...props}
     />
   );
@@ -56,21 +47,39 @@ export function DropdownMenuItem({
 export function DropdownMenuCheckboxItem({
   className,
   ...props
-}: DropdownMenuPrimitive.DropdownMenuCheckboxItemProps) {
+}: DropdownMenuThemes.DropdownMenu.CheckboxItemProps) {
   return (
-    <DropdownMenuPrimitive.CheckboxItem
-      className={cn("radix-dropdown-item radix-dropdown-checkbox-item", className)}
+    <DropdownMenuThemes.DropdownMenu.CheckboxItem
+      className={cn(className)}
       {...props}
     />
   );
 }
 
 export function DropdownMenuSeparator(
-  props: DropdownMenuPrimitive.DropdownMenuSeparatorProps
+  props: DropdownMenuThemes.DropdownMenu.SeparatorProps
+) {
+  return <DropdownMenuThemes.DropdownMenu.Separator {...props} />;
+}
+
+export function DropdownMenuRadioGroup(
+  props: DropdownMenuThemes.DropdownMenu.RadioGroupProps
 ) {
   return (
-    <DropdownMenuPrimitive.Separator
-      className="radix-dropdown-separator"
+    <DropdownMenuThemes.DropdownMenu.RadioGroup
+      data-slot="dropdown-menu-radio-group"
+      {...props}
+    />
+  );
+}
+
+export function DropdownMenuRadioItem({
+  className,
+  ...props
+}: DropdownMenuThemes.DropdownMenu.RadioItemProps) {
+  return (
+    <DropdownMenuThemes.DropdownMenu.RadioItem
+      className={cn(className)}
       {...props}
     />
   );

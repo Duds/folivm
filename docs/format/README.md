@@ -21,6 +21,7 @@ This directory documents the Folivm document format and project conventions. A t
 | [Frontmatter Schema](frontmatter-schema.md) | YAML frontmatter fields (title, created, author, etc.) |
 | [Project Conventions](project-conventions.md) | Project folder schema (inputs/, working/, context/, deliverables/) |
 | [Semantic Blocks](semantic-blocks.md) | Fenced div conventions (callout, executive-summary) |
+| [Nomenclature](nomenclature.md) | UI and feature terms (right panel, style picker, variable picker, etc.) |
 
 ---
 

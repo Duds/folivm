@@ -13,7 +13,7 @@ import {
   Search,
 } from "lucide-react";
 import * as Collapsible from "@radix-ui/react-collapsible";
-import * as ScrollArea from "@radix-ui/react-scroll-area";
+import { ScrollArea } from "@radix-ui/themes";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/Tooltip";
 import { cn } from "@/lib/utils";
 import { SearchPanel } from "./SearchPanel";
@@ -23,7 +23,7 @@ interface LeftSidebarProps {
   projectPath: string;
   groupedDocs: Map<string, string[]> | null;
   currentDoc: string | null;
-  onLoadDocument: (path: string) => void;
+  onLoadDocument: (path: string, openInNewTab?: boolean) => void;
   onCreateDocument: () => void;
   onRefreshExplorer: () => void;
   onMoveDocument: (fromRelativePath: string, toFolder: string) => void;
@@ -251,9 +251,11 @@ export function LeftSidebar({
               </div>
             </div>
           </div>
-          <ScrollArea.Root className="folder-list">
-            <ScrollArea.Viewport>
-              <div className="folder-list-inner">
+          <ScrollArea
+            scrollbars="vertical"
+            className="folder-list"
+          >
+            <div className="folder-list-inner">
                 {groupedDocs &&
                   Array.from(groupedDocs.entries())
                     .filter(([folder]) => folder !== "other")
@@ -350,7 +352,9 @@ export function LeftSidebar({
                                         doc
                                       );
                                     }}
-                                    onClick={() => onLoadDocument(doc)}
+                                    onClick={(e) =>
+                                      onLoadDocument(doc, e.metaKey || e.ctrlKey)
+                                    }
                                   >
                                     <span className="document-icon">
                                       <FileText size={16} />
@@ -365,11 +369,7 @@ export function LeftSidebar({
                       );
                     })}
               </div>
-            </ScrollArea.Viewport>
-            <ScrollArea.Scrollbar orientation="vertical" className="radix-scrollbar">
-              <ScrollArea.Thumb className="radix-scrollbar-thumb" />
-            </ScrollArea.Scrollbar>
-          </ScrollArea.Root>
+          </ScrollArea>
             </>
           )}
         </div>

@@ -34,8 +34,12 @@ Execution artefacts for Folivm, derived from the [PRD](../conceptual/prd-lean.md
 | 8 | EP-008 | UI scaffold (interface shell) | Figma-first design tokens, three-panel layout, theme modes. [UI Scaffold Prompt](ui-scaffold-prompt.md) |
 | 9 | EP-109 | Native application menu | Menu bar (Folivm, File, Edit, View, Window, Help) with proper items and shortcuts |
 | 10 | EP-110 | Empty editor canvas | Watermark, shortcuts list, no page chrome when no doc open |
-| 11 | EP-111 | Document tabs | Open multiple documents in tabs |
-| 12 | EP-112 | AI assistant as extension | Move LLM panel to optional extension; thin cloud vs API tokens |
+| 11 | EP-111 | Document tabs | Open multiple documents in tabs (including same-doc multi-view) |
+| 12 | EP-113 | Right panel: structure tree and Figma-style properties | Document structure tree, context-sensitive properties; YAML hidden |
+| 13 | EP-122 | Right panel style picker (paragraph and character) | Paragraph/character styles; primary over context menu; FR-2.4 |
+| 14 | EP-114 | Document layout: ruler, margins, tabs | Ruler above canvas; units configurable (mm, cm, inch) |
+| 15 | EP-115 | Adopt Radix Themes for application chrome | Consistent typography, spacing, colour; Dialog, Select, Switch, etc. |
+| 16 | EP-112 | AI assistant as extension | Move LLM panel to optional extension; thin cloud vs API tokens |
 
 ### Epic Index
 
@@ -51,7 +55,11 @@ Execution artefacts for Folivm, derived from the [PRD](../conceptual/prd-lean.md
 | [EP-008](epics/EP-008-ui-scaffold.md) | Author works in a professional interface shell with design tokens, three-panel layout, and theme modes | Done | — (spec: [ui-scaffold-prompt](ui-scaffold-prompt.md)) |
 | [EP-109](epics/EP-109-native-application-menu.md) | Author uses native application menu for common actions | Done | US-093–096 |
 | [EP-110](epics/EP-110-empty-editor-canvas.md) | Empty editor canvas shows Folivm watermark and shortcuts | Done | US-097–098 |
-| [EP-111](epics/EP-111-document-tabs.md) | Author can open multiple documents in tabs | Backlog | US-099–101 |
+| [EP-111](epics/EP-111-document-tabs.md) | Author can open multiple documents in tabs | Done | US-099–101 |
+| [EP-113](epics/EP-113-right-panel-structure-properties.md) | Right panel: document structure tree and Figma-style properties | Done | US-113, US-118–121 |
+| [EP-122](epics/EP-122-right-panel-style-picker.md) | Right panel style picker (paragraph and character) | Backlog | US-122–126 |
+| [EP-114](epics/EP-114-document-layout-ruler.md) | Document layout: ruler, margins, tabs | Done | US-116, US-117 |
+| [EP-115](epics/EP-115-radix-themes-adoption.md) | Adopt Radix Themes for application chrome | Done | — |
 | [EP-112](epics/EP-112-ai-assistant-extension.md) | AI assistant as optional extension | Backlog | US-102–104 |
 
 **Phase 0 success:** The author uses Folivm for their next real client deliverable instead of VS Code + manual pandoc.
@@ -114,9 +122,22 @@ Folivm's heading hierarchy is already the structural spine of every document —
 | [US-096](stories/US-096-help-menu-shortcuts.md) | Help menu and keyboard shortcut reference | Done |
 | [US-097](stories/US-097-empty-canvas-watermark.md) | Empty canvas layout and Folivm watermark | Done |
 | [US-098](stories/US-098-empty-canvas-shortcuts.md) | Keyboard shortcut list on empty canvas | Done |
-| [US-099](stories/US-099-document-tabs-ui.md) | Document tab bar UI | Backlog |
-| [US-100](stories/US-100-tab-state-unsaved.md) | Tab state and unsaved-change handling | Backlog |
-| [US-101](stories/US-101-explorer-opens-tab.md) | Explorer click opens or activates tab | Backlog |
+| [US-099](stories/US-099-document-tabs-ui.md) | Document tab bar UI (including same-doc multi-view) | Done |
+| [US-100](stories/US-100-tab-state-unsaved.md) | Tab state and unsaved-change handling | Done |
+| [US-101](stories/US-101-explorer-opens-tab.md) | Explorer click opens or activates tab | Done |
+| [US-113](stories/US-113-document-metadata-properties.md) | Document metadata in properties; YAML hidden | Done |
+| [US-118](stories/US-118-document-structure-tree.md) | Document structure tree (collapsible, selectable) | Partial |
+| [US-119](stories/US-119-context-sensitive-properties.md) | Context-sensitive properties for headings, paragraphs, lists, blocks | Partial |
+| [US-120](stories/US-120-list-properties.md) | List properties (bullet style, number format) | Backlog |
+| [US-121](stories/US-121-variable-picker-in-properties.md) | Folivm variable picker in properties panel | Partial |
+| [US-122](stories/US-122-two-way-selection-sync.md) | Two-way selection sync (editor ↔ structure tree ↔ properties) | Backlog |
+| [US-123](stories/US-123-paragraph-level-style-picker.md) | Paragraph-level style picker (heading, body, block type) | Backlog |
+| [US-124](stories/US-124-character-level-style-picker.md) | Character-level style picker (emphasis, strong, code, link) | Backlog |
+| [US-125](stories/US-125-variable-picker-persistence.md) | VariablePicker persistence for paragraph styles | Backlog |
+| [US-126](stories/US-126-nomenclature-doc-alignment.md) | Nomenclature doc and cross-doc alignment | Done |
+| [US-114](stories/US-114-non-visible-characters-toggle.md) | Toggle non-visible / non-printing characters | Done |
+| [US-115](stories/US-115-test-documents-word-processing.md) | Test documents for word processing features | Done |
+| [US-116](stories/US-116-ruler-above-canvas.md) | Ruler above document canvas | Done |
 | [US-102](stories/US-102-extension-panel-contract.md) | Extension contract for sidebar/panel registration | Backlog |
 | [US-103](stories/US-103-extract-assistant-extension.md) | Extract assistant panel into AI extension | Backlog |
 | [US-104](stories/US-104-core-no-builtin-ai.md) | Core app: extension slot, no built-in AI when absent | Backlog |
@@ -145,6 +166,7 @@ Epics are in [epics/](epics/). Stories (PBIs) are in [stories/](stories/).
 | FR-1.1–1.3 | EP-003, EP-006 |
 | FR-2.1–2.2 | EP-001 |
 | FR-2.3 | EP-002 |
+| FR-2.4 | EP-122 |
 | FR-3.1–3.3 | EP-004, EP-006 |
 | FR-4.1–4.3 | EP-005 |
 | FR-5.1–5.2 | EP-006 |

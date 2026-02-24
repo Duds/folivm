@@ -4,19 +4,20 @@ import { WindowChrome } from "@/components/shell/WindowChrome";
 import { NewDocumentModal } from "@/components/modals/NewDocumentModal";
 import { ReferenceDocxModal } from "@/components/modals/ReferenceDocxModal";
 import { KeyboardShortcutsModal } from "@/components/modals/KeyboardShortcutsModal";
-import { useTheme } from "./ThemeProvider";
+import { CloseTabModal } from "@/components/modals/CloseTabModal";
 import { useFolivmApp } from "./hooks/useFolivmApp";
 import { useMenuActions } from "./hooks/useMenuActions";
 import "./App.css";
 
 function App() {
-  const { mode, brand, setMode, setBrand } = useTheme();
   const folivm = useFolivmApp();
 
   useMenuActions({
     createProject: folivm.createProject,
     openProject: folivm.openProject,
     createDocument: folivm.createDocument,
+    openDocument: () => folivm.setLeftSidebarView("project"),
+    closeTab: folivm.closeActiveTab,
     saveDocument: () => folivm.saveDocument(folivm.docContent),
     exportPdf: folivm.exportPdf,
     exportDocx: folivm.exportDocx,
@@ -28,6 +29,7 @@ function App() {
     openKeyboardShortcuts: folivm.openKeyboardShortcutsModal,
     openDocumentation: folivm.openDocumentation,
     openSupport: folivm.openSupport,
+    toggleNonPrintingChars: folivm.toggleShowNonPrintingChars,
   });
 
   return (
@@ -44,11 +46,9 @@ function App() {
         }
         autosaveEnabled={folivm.autosaveEnabled}
         onAutosaveChange={folivm.setAutosaveEnabled}
-        mode={mode}
-        brand={brand}
-        onModeChange={setMode}
-        onBrandChange={setBrand}
         onOpenReferenceDocxModal={folivm.openReferenceDocxModal}
+        rulerUnits={folivm.rulerUnits}
+        onRulerUnitsChange={folivm.setRulerUnits}
       />
       {!folivm.project ? (
         <WelcomeScreen
@@ -70,24 +70,17 @@ function App() {
         onLeftSidebarWidthChange={folivm.setLeftSidebarWidth}
         rightSidebarCollapsed={folivm.rightSidebarCollapsed}
         onRightSidebarCollapsedChange={folivm.setRightSidebarCollapsed}
+        rightSidebarWidth={folivm.rightSidebarWidth}
+        onRightSidebarWidthChange={folivm.setRightSidebarWidth}
         expandedFolders={folivm.expandedFolders}
         onExpandedFoldersChange={folivm.setExpandedFolders}
-        contextFiles={folivm.contextFiles}
-        selectedContextPaths={folivm.selectedContextPaths}
-        onToggleContextFile={folivm.toggleContextFile}
-        showLlmConfig={folivm.showLlmConfig}
-        llmConfigForm={folivm.llmConfigForm}
-        onLlmConfigFormChange={folivm.setLlmConfigForm}
-        llmSuggestion={folivm.llmSuggestion}
-        llmPrompt={folivm.llmPrompt}
-        onLlmPromptChange={folivm.setLlmPrompt}
-        llmLoading={folivm.llmLoading}
         viewMode={folivm.viewMode}
         zoomLevel={folivm.zoomLevel}
+        showNonPrintingChars={folivm.showNonPrintingChars}
+        rulerUnits={folivm.rulerUnits}
         status={folivm.status}
         exportStatus={folivm.exportStatus}
         error={folivm.error}
-        assistantPromptRef={folivm.assistantPromptRef}
         onLoadDocument={folivm.loadDocument}
         onCreateDocument={folivm.createDocument}
         onRefreshExplorer={folivm.refreshExplorer}
@@ -113,16 +106,20 @@ function App() {
         searchInputRef={folivm.searchInputRef}
         onSaveDocument={folivm.saveDocument}
         onExportPdf={folivm.exportPdf}
-        onRequestLlm={folivm.requestLlm}
-        onAcceptLlmSuggestion={folivm.acceptLlmSuggestion}
-        onUpdateLlmSuggestion={folivm.updateLlmSuggestion}
-        onRejectLlmSuggestion={folivm.rejectLlmSuggestion}
-        onOpenLlmConfig={folivm.openLlmConfig}
-        onSaveLlmConfig={folivm.saveLlmConfig}
-        onCloseLlmConfig={() => folivm.setShowLlmConfig(false)}
         onViewModeChange={folivm.setViewMode}
         onZoomChange={folivm.setZoomLevel}
         wordCount={folivm.wordCount}
+        openTabs={folivm.openTabs}
+        activeTabId={folivm.activeTabId}
+        onSwitchTab={folivm.switchTab}
+        onCloseTab={folivm.closeTab}
+        selectedStructureNode={folivm.selectedStructureNode}
+        onSelectStructureNode={(nodeId) =>
+          folivm.handleSelectionChange(nodeId, false)
+        }
+        onSelectionChange={folivm.handleSelectionChange}
+        selectionHasCharacterRange={folivm.selectionHasCharacterRange}
+        editorCommandsRef={folivm.editorCommandsRef}
       />
 
       <NewDocumentModal
@@ -148,6 +145,12 @@ function App() {
       <KeyboardShortcutsModal
         open={folivm.showKeyboardShortcutsModal}
         onOpenChange={folivm.setShowKeyboardShortcutsModal}
+      />
+
+      <CloseTabModal
+        open={folivm.showCloseTabModal}
+        fileName={folivm.pendingCloseTabFileName}
+        onChoice={folivm.handleCloseTabChoice}
       />
     </div>
   );

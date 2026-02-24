@@ -1,2 +1,7 @@
-# Folivm docs/RAIDD generator. Install: pip install -r scripts/requirements.txt
+# Folivm scripts. Install: pip install -r scripts/requirements.txt
 PyYAML>=6.0
+
+# PNG to SVG conversion (scripts/png-to-svg.py)
+Pillow>=10.0
+potracer>=0.0.4
+numpy

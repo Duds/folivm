@@ -1,4 +1,4 @@
-import * as Select from "@radix-ui/react-select";
+import * as Select from "@radix-ui/themes";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/Tooltip";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/ToggleGroup";
 
@@ -95,29 +95,22 @@ export function BottomToolbar({
       {/* Centre-left — Zoom controls */}
       {showZoom && (
         <div className="toolbar-section toolbar-centre-left">
-          <Select.Root
+          <Select.Select.Root
             value={zoomValue}
             onValueChange={(v) => onZoomChange(parseInt(v, 10) || 100)}
           >
-            <Select.Trigger className="toolbar-zoom-trigger">
-              <Select.Value />
-            </Select.Trigger>
-            <Select.Portal>
-              <Select.Content className="radix-select-content toolbar-zoom-content">
-                <Select.Viewport>
-                  {ZOOM_OPTIONS.map((opt) => (
-                    <Select.Item
-                      key={opt.value}
-                      value={opt.value}
-                      className="radix-select-item"
-                    >
-                      <Select.ItemText>{opt.label}</Select.ItemText>
-                    </Select.Item>
-                  ))}
-                </Select.Viewport>
-              </Select.Content>
-            </Select.Portal>
-          </Select.Root>
+            <Select.Select.Trigger
+              placeholder="100%"
+              className="toolbar-zoom-trigger"
+            />
+            <Select.Select.Content>
+              {ZOOM_OPTIONS.map((opt) => (
+                <Select.Select.Item key={opt.value} value={opt.value}>
+                  {opt.label}
+                </Select.Select.Item>
+              ))}
+            </Select.Select.Content>
+          </Select.Select.Root>
           <Tooltip>
             <TooltipTrigger asChild>
               <button
